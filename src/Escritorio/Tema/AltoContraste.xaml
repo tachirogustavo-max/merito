@@ -1,0 +1,46 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Se aplica cuando Windows usa un tema de alto contraste: los colores de marca ceden ante los del sistema. -->
+    <x:Static x:Key="ColorFondo" Member="SystemColors.WindowColor"/>
+    <SolidColorBrush x:Key="TextoSobreMarca" Color="{x:Static SystemColors.WindowTextColor}"/>
+
+    <SolidColorBrush x:Key="Fondo" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="Superficie" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="SuperficieTenue" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="CabeceraTabla" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="FilaHover" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="Neutro100" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="NeutroSuave" Color="{x:Static SystemColors.WindowColor}"/>
+
+    <SolidColorBrush x:Key="Texto" Color="{x:Static SystemColors.WindowTextColor}"/>
+    <SolidColorBrush x:Key="Texto2" Color="{x:Static SystemColors.WindowTextColor}"/>
+    <SolidColorBrush x:Key="Texto3" Color="{x:Static SystemColors.GrayTextColor}"/>
+    <SolidColorBrush x:Key="Borde" Color="{x:Static SystemColors.WindowTextColor}"/>
+    <SolidColorBrush x:Key="BordeFuerte" Color="{x:Static SystemColors.WindowTextColor}"/>
+    <SolidColorBrush x:Key="BordeHover" Color="{x:Static SystemColors.HotTrackColor}"/>
+
+    <SolidColorBrush x:Key="Indigo900" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="Indigo800" Color="{x:Static SystemColors.HighlightColor}"/>
+    <SolidColorBrush x:Key="Indigo700" Color="{x:Static SystemColors.HotTrackColor}"/>
+    <SolidColorBrush x:Key="Indigo600" Color="{x:Static SystemColors.HighlightColor}"/>
+    <SolidColorBrush x:Key="Indigo500" Color="{x:Static SystemColors.HighlightColor}"/>
+    <SolidColorBrush x:Key="Indigo400" Color="{x:Static SystemColors.HighlightColor}"/>
+    <SolidColorBrush x:Key="Indigo300" Color="{x:Static SystemColors.HighlightColor}"/>
+    <SolidColorBrush x:Key="Indigo100" Color="{x:Static SystemColors.HighlightColor}"/>
+    <SolidColorBrush x:Key="Indigo50" Color="{x:Static SystemColors.WindowColor}"/>
+
+    <SolidColorBrush x:Key="Exito" Color="{x:Static SystemColors.WindowTextColor}"/>
+    <SolidColorBrush x:Key="ExitoSuave" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="Aviso" Color="{x:Static SystemColors.WindowTextColor}"/>
+    <SolidColorBrush x:Key="AvisoSuave" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="Error" Color="{x:Static SystemColors.WindowTextColor}"/>
+    <SolidColorBrush x:Key="ErrorSuave" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="ErrorBorde" Color="{x:Static SystemColors.WindowTextColor}"/>
+
+    <SolidColorBrush x:Key="FondoLateral" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="DegradadoMarca" Color="{x:Static SystemColors.WindowColor}"/>
+    <SolidColorBrush x:Key="LateralTexto" Color="{x:Static SystemColors.WindowTextColor}"/>
+    <SolidColorBrush x:Key="LateralTenue" Color="{x:Static SystemColors.GrayTextColor}"/>
+    <SolidColorBrush x:Key="LateralHover" Color="{x:Static SystemColors.HighlightColor}"/>
+    <SolidColorBrush x:Key="LateralActivo" Color="{x:Static SystemColors.HighlightColor}"/>
+</ResourceDictionary>

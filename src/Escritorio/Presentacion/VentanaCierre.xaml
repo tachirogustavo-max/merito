@@ -1,0 +1,47 @@
+﻿<p:VentanaBase x:Class="Escritorio.Presentacion.VentanaCierre"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:p="clr-namespace:Escritorio.Presentacion"
+               mc:Ignorable="d" d:Language="es-VE"
+               Title="Revisión de cierre" Width="640" Height="560" MinWidth="480" MinHeight="360"
+               WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Margin="30,4,30,18">
+            <TextBlock x:Name="TituloPeriodo" Style="{StaticResource TituloDialogo}" FontSize="21" d:Text="2-2026"/>
+            <TextBlock x:Name="Resumen" Style="{StaticResource TextoSecundario}" Margin="0,6,0,0" d:Text="Resuelve los pendientes antes de cerrar el período."/>
+        </StackPanel>
+        <Border BorderBrush="{DynamicResource Borde}" BorderThickness="0,1,0,0">
+            <ScrollViewer Padding="30,18,30,12" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock x:Name="SinMaterias" Text="El período no tiene materias asignadas." Style="{StaticResource TextoSecundario}" Visibility="Collapsed"/>
+                    <ItemsControl x:Name="Materias" Focusable="False" d:ItemsSource="{x:Static p:Muestras.RenglonesCierre}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Margin="0,0,0,14">
+                                    <Border x:Name="Marca" DockPanel.Dock="Left" Width="30" Height="30" CornerRadius="15" VerticalAlignment="Top"
+                                            Background="{DynamicResource AvisoSuave}">
+                                        <p:Icono x:Name="Simbolo" Datos="{StaticResource IcoAlerta}" Width="16" Height="16" TextElement.Foreground="{DynamicResource Aviso}"/>
+                                    </Border>
+                                    <StackPanel Margin="12,0,0,0">
+                                        <TextBlock Text="{Binding Titulo}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                        <TextBlock x:Name="Detalle" Text="{Binding Detalle}" Style="{StaticResource TextoSecundario}" Foreground="{DynamicResource Texto2}" Margin="0,3,0,0"/>
+                                    </StackPanel>
+                                </DockPanel>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding Completa}" Value="True">
+                                        <Setter TargetName="Marca" Property="Background" Value="{DynamicResource ExitoSuave}"/>
+                                        <Setter TargetName="Simbolo" Property="Datos" Value="{StaticResource IcoCheck}"/>
+                                        <Setter TargetName="Simbolo" Property="TextElement.Foreground" Value="{DynamicResource Exito}"/>
+                                        <Setter TargetName="Detalle" Property="Foreground" Value="{DynamicResource Exito}"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</p:VentanaBase>

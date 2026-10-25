@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 420" width="880" height="420" font-family="Segoe UI, sans-serif">
+  <rect width="880" height="420" fill="#F5F6FA"/>
+  <text x="40" y="52" font-size="22" font-weight="600" fill="#171A2C">Mérito · Paleta</text>
+  <text x="40" y="78" font-size="13" fill="#4E5470">Índigo de marca, ámbar de acento y neutros fríos.</text>
+  <g font-size="12">
+    <rect x="40" y="104" width="120" height="96" rx="12" fill="#17184A"/><text x="40" y="220" fill="#171A2C" font-weight="600">Índigo 900</text><text x="40" y="236" fill="#4E5470">#17184A</text>
+    <rect x="176" y="104" width="120" height="96" rx="12" fill="#3434A8"/><text x="176" y="220" fill="#171A2C" font-weight="600">Índigo 700</text><text x="176" y="236" fill="#4E5470">#3434A8</text>
+    <rect x="312" y="104" width="120" height="96" rx="12" fill="#4343D0"/><text x="312" y="220" fill="#171A2C" font-weight="600">Índigo 600 · principal</text><text x="312" y="236" fill="#4E5470">#4343D0</text>
+    <rect x="448" y="104" width="120" height="96" rx="12" fill="#5D5FEA"/><text x="448" y="220" fill="#171A2C" font-weight="600">Índigo 500</text><text x="448" y="236" fill="#4E5470">#5D5FEA</text>
+    <rect x="584" y="104" width="120" height="96" rx="12" fill="#E4E5FD"/><text x="584" y="220" fill="#171A2C" font-weight="600">Índigo 100</text><text x="584" y="236" fill="#4E5470">#E4E5FD</text>
+    <rect x="720" y="104" width="120" height="96" rx="12" fill="#F5A524"/><text x="720" y="220" fill="#171A2C" font-weight="600">Ámbar · acento</text><text x="720" y="236" fill="#4E5470">#F5A524</text>
+
+    <rect x="40" y="270" width="120" height="70" rx="12" fill="#171A2C"/><text x="40" y="360" fill="#171A2C" font-weight="600">Texto</text><text x="40" y="376" fill="#4E5470">#171A2C</text>
+    <rect x="176" y="270" width="120" height="70" rx="12" fill="#4E5470"/><text x="176" y="360" fill="#171A2C" font-weight="600">Texto secundario</text><text x="176" y="376" fill="#4E5470">#4E5470</text>
+    <rect x="312" y="270" width="120" height="70" rx="12" fill="#FFFFFF" stroke="#E2E5EE"/><text x="312" y="360" fill="#171A2C" font-weight="600">Superficie / Borde</text><text x="312" y="376" fill="#4E5470">#FFFFFF · #E2E5EE</text>
+    <rect x="448" y="270" width="120" height="70" rx="12" fill="#13795B"/><text x="448" y="360" fill="#171A2C" font-weight="600">Éxito</text><text x="448" y="376" fill="#4E5470">#13795B · #E3F4EC</text>
+    <rect x="584" y="270" width="120" height="70" rx="12" fill="#9A5B00"/><text x="584" y="360" fill="#171A2C" font-weight="600">Aviso</text><text x="584" y="376" fill="#4E5470">#9A5B00 · #FFF3DC</text>
+    <rect x="720" y="270" width="120" height="70" rx="12" fill="#BE3144"/><text x="720" y="360" fill="#171A2C" font-weight="600">Error</text><text x="720" y="376" fill="#4E5470">#BE3144 · #FCE9EC</text>
+  </g>
+</svg>

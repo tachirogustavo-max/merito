@@ -1,0 +1,32 @@
+﻿<p:VentanaBase x:Class="Escritorio.Presentacion.VentanaCodigo"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:p="clr-namespace:Escritorio.Presentacion"
+               mc:Ignorable="d" d:Language="es-VE"
+               Title="Código de acceso" Width="560" SizeToContent="Height" ResizeMode="NoResize"
+               WindowStartupLocation="CenterOwner" ShowInTaskbar="False" MostrarTitulo="False">
+    <StackPanel Margin="30,0,30,26">
+        <TextBlock Text="Código de acceso" Style="{StaticResource TituloDialogo}" FontSize="21"/>
+        <TextBlock x:Name="Titular" Style="{StaticResource TextoSecundario}" Margin="0,6,0,20" d:Text="Ana Pérez, cédula V-12345678"/>
+
+        <TextBox x:Name="Codigo" IsReadOnly="True" FontFamily="{StaticResource FuenteCodigo}" FontSize="20" TextWrapping="Wrap"
+                 Padding="16,14" HorizontalContentAlignment="Center" d:Text="K7QF-2M9X-4AB3-ZZ99"
+                 Background="{DynamicResource Indigo50}" BorderBrush="{DynamicResource Indigo100}" Foreground="{DynamicResource Indigo800}"/>
+
+        <DockPanel Margin="0,14,0,0">
+            <p:Icono DockPanel.Dock="Left" Datos="{StaticResource IcoAlerta}" Width="16" Height="16" Margin="0,1,8,0" VerticalAlignment="Top"
+                     TextElement.Foreground="{DynamicResource Aviso}"/>
+            <TextBlock x:Name="Vence" Style="{StaticResource TextoSecundario}" Foreground="{DynamicResource Aviso}"
+                       d:Text="Vence a las 10:30. Entrégalo únicamente a su titular; se usa una sola vez."/>
+        </DockPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,24,0,0">
+            <Button Style="{StaticResource BotonSecundario}" Margin="0,0,10,0" MinWidth="104" Click="Copiar_Click">
+                <p:IconoTexto x:Name="RotuloCopiar" Icono="IcoCopiar" Texto="Copiar"/>
+            </Button>
+            <Button Content="Listo" IsDefault="True" IsCancel="True" MinWidth="104" Click="Listo_Click"/>
+        </StackPanel>
+    </StackPanel>
+</p:VentanaBase>

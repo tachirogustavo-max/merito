@@ -1,0 +1,1207 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Escritorio.Presentacion"
+                    xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
+
+    <p:ConvertidorCapital x:Key="Capital"/>
+    <p:ConvertidorFecha x:Key="Fecha"/>
+
+    <!-- Texto -->
+    <Style x:Key="TituloPagina" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FuenteTitulo}"/>
+        <Setter Property="FontSize" Value="27"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+    </Style>
+    <Style x:Key="TituloSeccion" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource FuenteTitulo}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+    <Style x:Key="TituloDialogo" TargetType="TextBlock" BasedOn="{StaticResource TituloSeccion}">
+        <Setter Property="FontSize" Value="19"/>
+    </Style>
+    <Style x:Key="TextoSecundario" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Texto2}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="LineHeight" Value="21"/>
+    </Style>
+    <Style x:Key="TextoNota" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Texto3}"/>
+        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="LineHeight" Value="19"/>
+    </Style>
+    <Style x:Key="Rotulo" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource Texto3}"/>
+        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="Foreground" Value="{StaticResource Texto2}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0,0,0,7"/>
+    </Style>
+
+    <Style TargetType="ToolTip">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="HasDropShadow" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border Background="{StaticResource Indigo950}" CornerRadius="6" Padding="9,5" Margin="0,4">
+                        <ContentPresenter TextElement.Foreground="White"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Foco visible solo al navegar con el teclado; el ratón no deja anillos pegados -->
+    <Style x:Key="FocoTeclado">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Margin="-3" CornerRadius="11" BorderThickness="2" BorderBrush="{StaticResource Indigo500}" SnapsToDevicePixels="True"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="FocoClaro">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Margin="-2" CornerRadius="10" BorderThickness="2" BorderBrush="{StaticResource Ambar}" SnapsToDevicePixels="True"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="FocoCelda">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderThickness="0,0,0,0" Background="Transparent">
+                        <Border BorderThickness="1.5" BorderBrush="{StaticResource Indigo500}" Margin="1" CornerRadius="3"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{StaticResource Texto2}"/>
+        <Setter Property="FontSize" Value="13.5"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocoTeclado}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal" Background="Transparent">
+                        <Border x:Name="Caja" Width="18" Height="18" CornerRadius="5" BorderThickness="1.5" BorderBrush="{StaticResource BordeHover}"
+                                Background="{StaticResource Superficie}" VerticalAlignment="Center">
+                            <Path x:Name="Marca" Data="M3.5,9 L7,12.5 L14,5.5" Stroke="White" StrokeThickness="2" StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round" StrokeLineJoin="Round" Visibility="Collapsed" Width="18" Height="18" Margin="-1.5"/>
+                        </Border>
+                        <ContentPresenter Margin="9,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Caja" Property="BorderBrush" Value="{StaticResource Indigo500}"/></Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Caja" Property="Background" Value="{StaticResource Indigo600}"/>
+                            <Setter TargetName="Caja" Property="BorderBrush" Value="{StaticResource Indigo600}"/>
+                            <Setter TargetName="Marca" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Ventana -->
+    <Style x:Key="BotonTitulo" TargetType="Button">
+        <Setter Property="Width" Value="46"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto2}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Fondo" Background="{TemplateBinding Background}">
+                        <Path x:Name="Glifo" Data="{TemplateBinding Tag}" Width="10" Height="10" Stretch="None"
+                              Stroke="{TemplateBinding Foreground}" StrokeThickness="1" SnapsToDevicePixels="True"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Fondo" Property="Background" Value="#1F808080"/></Trigger>
+                        <Trigger Property="IsPressed" Value="True"><Setter TargetName="Fondo" Property="Background" Value="#33808080"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BotonTituloCerrar" TargetType="Button" BasedOn="{StaticResource BotonTitulo}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Fondo" Background="Transparent">
+                        <Path x:Name="Glifo" Data="{TemplateBinding Tag}" Width="10" Height="10" Stretch="None"
+                              Stroke="{TemplateBinding Foreground}" StrokeThickness="1"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fondo" Property="Background" Value="#C42B1C"/>
+                            <Setter TargetName="Glifo" Property="Stroke" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Fondo" Property="Background" Value="#B1271A"/>
+                            <Setter TargetName="Glifo" Property="Stroke" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="p:VentanaBase">
+        <Setter Property="Background" Value="{StaticResource Fondo}"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FuenteTexto}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Icon" Value="pack://application:,,,/Merito;component/Recursos/merito.ico"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="shell:WindowChrome.WindowChrome">
+            <Setter.Value>
+                <shell:WindowChrome CaptionHeight="40" ResizeBorderThickness="6" CornerRadius="0"
+                                    GlassFrameThickness="0,0,0,1" UseAeroCaptionButtons="False"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="p:VentanaBase">
+                    <Border Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <AdornerDecorator x:Name="Cuerpo" Grid.Row="1">
+                                <ContentPresenter/>
+                            </AdornerDecorator>
+                            <StackPanel x:Name="Encabezado" Orientation="Horizontal" Margin="16,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+                                <Image Source="{StaticResource Logo}" Width="18" Height="18" Margin="0,0,10,0"/>
+                                <TextBlock Text="{TemplateBinding Title}" FontSize="12.5" Foreground="{StaticResource Texto2}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                            <StackPanel x:Name="PART_Avisos" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        Margin="0,52,22,0" Panel.ZIndex="10"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Button x:Name="PART_Minimizar" Style="{StaticResource BotonTitulo}" Tag="{StaticResource GlifoMinimizar}" ToolTip="Minimizar" AutomationProperties.Name="Minimizar"/>
+                                <Button x:Name="PART_Maximizar" Style="{StaticResource BotonTitulo}" Tag="{StaticResource GlifoMaximizar}" AutomationProperties.Name="Maximizar"/>
+                                <Button x:Name="PART_Cerrar" Style="{StaticResource BotonTituloCerrar}" Tag="{StaticResource GlifoCerrar}" ToolTip="Cerrar" AutomationProperties.Name="Cerrar"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ContenidoBajoTitulo" Value="True">
+                            <Setter TargetName="Cuerpo" Property="Grid.Row" Value="0"/>
+                            <Setter TargetName="Cuerpo" Property="Grid.RowSpan" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="MostrarTitulo" Value="False"><Setter TargetName="Encabezado" Property="Visibility" Value="Collapsed"/></Trigger>
+                        <Trigger Property="WindowState" Value="Maximized"><Setter TargetName="PART_Maximizar" Property="Tag" Value="{StaticResource GlifoRestaurar}"/></Trigger>
+                        <Trigger Property="TituloClaro" Value="True">
+                            <Setter TargetName="PART_Minimizar" Property="Foreground" Value="#D9FFFFFF"/>
+                            <Setter TargetName="PART_Maximizar" Property="Foreground" Value="#D9FFFFFF"/>
+                            <Setter TargetName="PART_Cerrar" Property="Foreground" Value="#D9FFFFFF"/>
+                        </Trigger>
+                        <Trigger Property="MaximizarResaltado" Value="True"><Setter TargetName="PART_Maximizar" Property="Background" Value="#0F000000"/></Trigger>
+                        <Trigger Property="MaximizarPresionado" Value="True"><Setter TargetName="PART_Maximizar" Property="Background" Value="#1A000000"/></Trigger>
+                        <Trigger Property="ResizeMode" Value="NoResize">
+                            <Setter TargetName="PART_Minimizar" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_Maximizar" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanMinimize"><Setter TargetName="PART_Maximizar" Property="Visibility" Value="Collapsed"/></Trigger>
+                        <Trigger Property="IsActive" Value="False">
+                            <Setter TargetName="Encabezado" Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Botones -->
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource Indigo600}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Indigo600}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="16,0"/>
+        <Setter Property="MinHeight" Value="38"/>
+        <Setter Property="FontSize" Value="13.5"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocoTeclado}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="Raiz">
+                        <Border x:Name="Fondo" CornerRadius="8" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                        <Border x:Name="Capa" CornerRadius="8" Background="#000000" Opacity="0" IsHitTestVisible="False"/>
+                        <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Capa" Property="Opacity" Value="0.08"/></Trigger>
+                        <Trigger Property="IsPressed" Value="True"><Setter TargetName="Capa" Property="Opacity" Value="0.16"/></Trigger>
+                        <Trigger Property="IsEnabled" Value="False"><Setter TargetName="Raiz" Property="Opacity" Value="0.5"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BotonSecundario" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{StaticResource Superficie}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BordeFuerte}"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+    </Style>
+    <Style x:Key="BotonSutil" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource Indigo700}"/>
+        <Setter Property="Padding" Value="10,0"/>
+    </Style>
+    <Style x:Key="BotonPeligro" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Background" Value="{StaticResource Error}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Error}"/>
+    </Style>
+    <Style x:Key="BotonLateral" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocoClaro}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource LateralTexto}"/>
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Fondo" CornerRadius="8" Background="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fondo" Property="Background" Value="{StaticResource LateralActivo}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BotonIcono" TargetType="Button">
+        <Setter Property="Foreground" Value="{StaticResource Texto3}"/>
+        <Setter Property="Width" Value="28"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocoTeclado}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Fondo" CornerRadius="7" Background="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Fondo" Property="Background" Value="{StaticResource Neutro100}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Navegacion" TargetType="ToggleButton">
+        <Setter Property="Foreground" Value="{StaticResource LateralTexto}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Margin" Value="0,0,0,4"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocoClaro}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid MinHeight="42">
+                        <Border x:Name="Seleccion" CornerRadius="9" Background="Transparent"/>
+                        <Border x:Name="Marca" Width="3" Height="18" CornerRadius="1.5" Background="{StaticResource Ambar}"
+                                HorizontalAlignment="Left" Margin="0,0,0,0" Visibility="Hidden"/>
+                        <ContentPresenter Margin="14,0,12,0" VerticalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Seleccion" Property="Background" Value="{StaticResource LateralHover}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Seleccion" Property="Background" Value="{StaticResource LateralActivo}"/>
+                            <Setter TargetName="Marca" Property="Visibility" Value="Visible"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Campos -->
+    <Style x:Key="BaseCampo" TargetType="Control">
+        <Setter Property="Background" Value="{StaticResource Superficie}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BordeFuerte}"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="11,0"/>
+        <Setter Property="MinHeight" Value="40"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+
+    <ControlTemplate x:Key="PlantillaCampo" TargetType="Control">
+        <Grid>
+            <Border x:Name="Anillo" Margin="-3" CornerRadius="10" BorderThickness="3" BorderBrush="Transparent"/>
+            <Border x:Name="Marco" CornerRadius="8" Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="False"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource BordeHover}"/></Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource Indigo600}"/>
+                <Setter TargetName="Anillo" Property="BorderBrush" Value="{StaticResource Indigo100}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Marco" Property="Background" Value="{StaticResource Neutro100}"/>
+                <Setter Property="Foreground" Value="{StaticResource Texto3}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="TextBox" BasedOn="{StaticResource BaseCampo}">
+        <Setter Property="CaretBrush" Value="{StaticResource Texto}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource Indigo400}"/>
+        <Setter Property="Template" Value="{StaticResource PlantillaCampo}"/>
+        <Style.Triggers>
+            <Trigger Property="IsReadOnly" Value="True"><Setter Property="Background" Value="{StaticResource SuperficieTenue}"/></Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="PasswordBox" BasedOn="{StaticResource BaseCampo}">
+        <Setter Property="CaretBrush" Value="{StaticResource Texto}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource Indigo400}"/>
+        <Setter Property="Template" Value="{StaticResource PlantillaCampo}"/>
+    </Style>
+
+    <!-- Campo con icono: el icono se indica en Tag -->
+    <Style x:Key="CampoIcono" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border x:Name="Anillo" Margin="-3" CornerRadius="10" BorderThickness="3" BorderBrush="Transparent"/>
+                        <Border x:Name="Marco" CornerRadius="8" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <DockPanel Margin="11,0,0,0">
+                                <p:Icono x:Name="IconoCampo" DockPanel.Dock="Left" Datos="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                         Width="18" Height="18" TextElement.Foreground="{StaticResource Texto3}"/>
+                                <Grid>
+                                    <!-- Con margen a la derecha y recorte: el texto nunca toca ni pasa el borde del campo -->
+                                    <TextBlock x:Name="Sugerencia" Text="{Binding (p:Sugerencias.Texto), RelativeSource={RelativeSource TemplatedParent}}" Foreground="{StaticResource Texto3}"
+                                               VerticalAlignment="Center" Margin="13,0,14,0" IsHitTestVisible="False" Visibility="Collapsed" TextTrimming="CharacterEllipsis"/>
+                                    <ScrollViewer x:Name="PART_ContentHost" Focusable="False" VerticalAlignment="Center" Margin="0,0,12,0"
+                                                  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                </Grid>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value=""><Setter TargetName="Sugerencia" Property="Visibility" Value="Visible"/></Trigger>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource BordeHover}"/></Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource Indigo600}"/>
+                            <Setter TargetName="Anillo" Property="BorderBrush" Value="{StaticResource Indigo100}"/>
+                            <Setter TargetName="IconoCampo" Property="TextElement.Foreground" Value="{StaticResource Indigo600}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Caja de la lista con búsqueda: campo normal con texto de ayuda y espacio para la flecha -->
+    <Style x:Key="CampoLista" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border x:Name="Anillo" Margin="-3" CornerRadius="10" BorderThickness="3" BorderBrush="Transparent"/>
+                        <Border x:Name="Marco" CornerRadius="8" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Margin="12,0,34,0">
+                                <TextBlock x:Name="Sugerencia" Text="{Binding (p:Sugerencias.Texto), RelativeSource={RelativeSource TemplatedParent}}" Foreground="{StaticResource Texto3}"
+                                           VerticalAlignment="Center" Margin="2,0,0,0" IsHitTestVisible="False" Visibility="Collapsed" TextTrimming="CharacterEllipsis"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" VerticalAlignment="Center"
+                                              HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value=""><Setter TargetName="Sugerencia" Property="Visibility" Value="Visible"/></Trigger>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource BordeHover}"/></Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource Indigo600}"/>
+                            <Setter TargetName="Anillo" Property="BorderBrush" Value="{StaticResource Indigo100}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ClaveIcono" TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Grid>
+                        <Border x:Name="Anillo" Margin="-3" CornerRadius="10" BorderThickness="3" BorderBrush="Transparent"/>
+                        <Border x:Name="Marco" CornerRadius="8" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <DockPanel Margin="11,0,0,0">
+                                <p:Icono x:Name="IconoCampo" DockPanel.Dock="Left" Datos="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                         Width="18" Height="18" TextElement.Foreground="{StaticResource Texto3}"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" VerticalAlignment="Center"
+                                              HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource BordeHover}"/></Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource Indigo600}"/>
+                            <Setter TargetName="Anillo" Property="BorderBrush" Value="{StaticResource Indigo100}"/>
+                            <Setter TargetName="IconoCampo" Property="TextElement.Foreground" Value="{StaticResource Indigo600}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Edición dentro de la planilla -->
+    <Style x:Key="EdicionCelda" TargetType="TextBox">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource Indigo700}"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource Indigo400}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <ScrollViewer x:Name="PART_ContentHost" Focusable="False" VerticalAlignment="Center"
+                                  HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Lista desplegable -->
+    <Style x:Key="AlternarCombo" TargetType="ToggleButton">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="ClickMode" Value="Press"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Background="Transparent">
+                        <Path x:Name="Flecha" Data="M0,0 L5,5 L10,0" Stroke="{StaticResource Texto2}" StrokeThickness="1.6"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                              HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,1,14,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform><RotateTransform x:Name="Giro" Angle="0"/></Path.RenderTransform>
+                        </Path>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True"><Setter TargetName="Flecha" Property="RenderTransform"><Setter.Value><RotateTransform Angle="180"/></Setter.Value></Setter></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ComboBox" BasedOn="{StaticResource BaseCampo}">
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="MaxDropDownHeight" Value="320"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid x:Name="Raiz" SnapsToDevicePixels="True">
+                        <Border x:Name="Anillo" Margin="-3" CornerRadius="10" BorderThickness="3" BorderBrush="Transparent"/>
+                        <Border x:Name="Marco" CornerRadius="8" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+                        <ToggleButton Style="{StaticResource AlternarCombo}"
+                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" Margin="12,0,36,0"
+                                          VerticalAlignment="Center" HorizontalAlignment="Left"
+                                          Content="{TemplateBinding SelectionBoxItem}"
+                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                          ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"/>
+                        <TextBlock x:Name="Vacio" Text="Seleccionar…" Foreground="{StaticResource Texto3}" Margin="13,0,36,0"
+                                   VerticalAlignment="Center" IsHitTestVisible="False" Visibility="Collapsed"/>
+                        <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" VerticalOffset="4" HorizontalOffset="-12"
+                               IsOpen="{TemplateBinding IsDropDownOpen}" Focusable="False" PopupAnimation="Fade">
+                            <Grid Margin="12,0,12,16" MinWidth="{Binding ActualWidth, ElementName=Raiz}">
+                                <Border CornerRadius="10" Background="{StaticResource Superficie}">
+                                    <Border.Effect><DropShadowEffect BlurRadius="20" ShadowDepth="5" Direction="270" Opacity="0.16" Color="{StaticResource ColorSombra}"/></Border.Effect>
+                                </Border>
+                                <Border CornerRadius="10" Background="{StaticResource Superficie}" BorderBrush="{StaticResource Borde}" BorderThickness="1"
+                                        Padding="4" MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="SelectedItem" Value="{x:Null}"><Setter TargetName="Vacio" Property="Visibility" Value="Visible"/></Trigger>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource BordeHover}"/></Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Marco" Property="BorderBrush" Value="{StaticResource Indigo600}"/>
+                            <Setter TargetName="Anillo" Property="BorderBrush" Value="{StaticResource Indigo100}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Marco" Property="Background" Value="{StaticResource Neutro100}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Texto3}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="Padding" Value="10,9"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBoxItem">
+                    <Border x:Name="Fondo" CornerRadius="6" Padding="{TemplateBinding Padding}" Background="Transparent">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True"><Setter TargetName="Fondo" Property="Background" Value="{StaticResource Neutro100}"/></Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Fondo" Property="Background" Value="{StaticResource Indigo50}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Indigo700}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Opción de la lista con búsqueda: la resaltada se marca igual que en la lista desplegable -->
+    <Style x:Key="OpcionBuscable" TargetType="ListBoxItem">
+        <Setter Property="Padding" Value="10,9"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="Fondo" CornerRadius="6" Padding="{TemplateBinding Padding}" Background="Transparent">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Fondo" Property="Background" Value="{StaticResource Neutro100}"/></Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Fondo" Property="Background" Value="{StaticResource Indigo50}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Indigo700}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Desplegable de sección -->
+    <Style TargetType="Expander">
+        <Setter Property="Foreground" Value="{StaticResource Texto2}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Expander">
+                    <DockPanel>
+                        <ToggleButton x:Name="Cabecera" DockPanel.Dock="Top" IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Cursor="Hand" FocusVisualStyle="{StaticResource FocoTeclado}" Foreground="{TemplateBinding Foreground}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border x:Name="Fondo" Background="Transparent" CornerRadius="6" Padding="2,6">
+                                        <StackPanel Orientation="Horizontal">
+                                            <p:Icono x:Name="Chevron" Datos="{StaticResource IcoChevronDerecha}" Width="16" Height="16" Margin="0,0,6,0" RenderTransformOrigin="0.5,0.5">
+                                                <p:Icono.RenderTransform><RotateTransform Angle="0"/></p:Icono.RenderTransform>
+                                            </p:Icono>
+                                            <ContentPresenter VerticalAlignment="Center" TextElement.FontSize="13" TextElement.FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter TargetName="Chevron" Property="RenderTransform"><Setter.Value><RotateTransform Angle="90"/></Setter.Value></Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{StaticResource Indigo700}"/></Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="True"/>
+                        </ToggleButton>
+                        <ContentPresenter x:Name="Contenido" Visibility="Collapsed" Margin="0,10,0,0"/>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True"><Setter TargetName="Contenido" Property="Visibility" Value="Visible"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Pestañas -->
+    <Style TargetType="TabControl">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid KeyboardNavigation.TabNavigation="Local">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                        <Border BorderBrush="{StaticResource Borde}" BorderThickness="0,0,0,1">
+                            <TabPanel x:Name="HeaderPanel" IsItemsHost="True" KeyboardNavigation.TabIndex="1" Margin="0,0,0,-1"/>
+                        </Border>
+                        <ContentPresenter x:Name="PART_SelectedContentHost" Grid.Row="1" ContentSource="SelectedContent" Margin="0,18,0,0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="TabItem">
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocoTeclado}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid x:Name="Raiz" Margin="0,0,26,0" Background="Transparent">
+                        <ContentPresenter x:Name="Texto" ContentSource="Header" Margin="2,10,2,13" VerticalAlignment="Center" TextElement.Foreground="{StaticResource Texto2}"/>
+                        <Border x:Name="Linea" Height="3" CornerRadius="1.5" VerticalAlignment="Bottom" Background="Transparent"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Texto" Property="TextElement.Foreground" Value="{StaticResource Texto}"/>
+                            <Setter TargetName="Linea" Property="Background" Value="{StaticResource BordeFuerte}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Texto" Property="TextElement.Foreground" Value="{StaticResource Indigo700}"/>
+                            <Setter TargetName="Texto" Property="TextElement.FontWeight" Value="SemiBold"/>
+                            <Setter TargetName="Linea" Property="Background" Value="{StaticResource Indigo600}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Pestañas segmentadas para subsecciones -->
+    <Style x:Key="Segmento" TargetType="TabItem">
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="FontSize" Value="13.5"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocoTeclado}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border x:Name="Fondo" CornerRadius="7" Padding="16,7" Margin="0,0,2,0" Background="Transparent" BorderThickness="1" BorderBrush="Transparent">
+                        <ContentPresenter x:Name="Texto" ContentSource="Header" VerticalAlignment="Center" TextElement.Foreground="{StaticResource Texto2}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Texto" Property="TextElement.Foreground" Value="{StaticResource Texto}"/></Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Fondo" Property="Background" Value="{StaticResource Superficie}"/>
+                            <Setter TargetName="Fondo" Property="BorderBrush" Value="{StaticResource Borde}"/>
+                            <Setter TargetName="Texto" Property="TextElement.Foreground" Value="{StaticResource Indigo700}"/>
+                            <Setter TargetName="Texto" Property="TextElement.FontWeight" Value="SemiBold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PestanasSegmentadas" TargetType="TabControl">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource Segmento}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid KeyboardNavigation.TabNavigation="Local">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                        <Border Background="{StaticResource Neutro100}" CornerRadius="9" Padding="3" HorizontalAlignment="Left">
+                            <TabPanel IsItemsHost="True" KeyboardNavigation.TabIndex="1"/>
+                        </Border>
+                        <ContentPresenter x:Name="PART_SelectedContentHost" Grid.Row="1" ContentSource="SelectedContent" Margin="0,4,0,0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Barras de desplazamiento -->
+    <Style x:Key="PistaScroll" TargetType="RepeatButton">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value><ControlTemplate TargetType="RepeatButton"><Border Background="Transparent"/></ControlTemplate></Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PulgarScroll" TargetType="Thumb">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border x:Name="Barra" CornerRadius="4" Background="#B8BDCC"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Barra" Property="Background" Value="#8E94A8"/></Trigger>
+                        <Trigger Property="IsDragging" Value="True"><Setter TargetName="Barra" Property="Background" Value="{StaticResource Indigo500}"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="ScrollVertical" TargetType="ScrollBar">
+        <Border x:Name="Carril" Background="Transparent" Padding="3,3" CornerRadius="6">
+            <Track x:Name="PART_Track" IsDirectionReversed="True">
+                <Track.DecreaseRepeatButton><RepeatButton Style="{StaticResource PistaScroll}" Command="ScrollBar.PageUpCommand"/></Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton><RepeatButton Style="{StaticResource PistaScroll}" Command="ScrollBar.PageDownCommand"/></Track.IncreaseRepeatButton>
+                <Track.Thumb><Thumb Style="{StaticResource PulgarScroll}"/></Track.Thumb>
+            </Track>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Carril" Property="Padding" Value="2,3"/>
+                <Setter TargetName="Carril" Property="Background" Value="#0A1B1E3A"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="ScrollHorizontal" TargetType="ScrollBar">
+        <Border x:Name="Carril" Background="Transparent" Padding="3,3" CornerRadius="6">
+            <Track x:Name="PART_Track" IsDirectionReversed="False">
+                <Track.DecreaseRepeatButton><RepeatButton Style="{StaticResource PistaScroll}" Command="ScrollBar.PageLeftCommand"/></Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton><RepeatButton Style="{StaticResource PistaScroll}" Command="ScrollBar.PageRightCommand"/></Track.IncreaseRepeatButton>
+                <Track.Thumb><Thumb Style="{StaticResource PulgarScroll}"/></Track.Thumb>
+            </Track>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Carril" Property="Padding" Value="3,2"/>
+                <Setter TargetName="Carril" Property="Background" Value="#0A1B1E3A"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style TargetType="ScrollBar">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="MinWidth" Value="12"/>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="Template" Value="{StaticResource ScrollVertical}"/>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="MinWidth" Value="0"/>
+                <Setter Property="Height" Value="12"/>
+                <Setter Property="MinHeight" Value="12"/>
+                <Setter Property="Template" Value="{StaticResource ScrollHorizontal}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="ScrollViewer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Margin="{TemplateBinding Padding}"
+                                                CanContentScroll="{TemplateBinding CanContentScroll}"
+                                                Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"/>
+                        <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="1" Cursor="Arrow" Minimum="0"
+                                   Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}"
+                                   Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                        <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Row="1" Orientation="Horizontal" Cursor="Arrow" Minimum="0"
+                                   Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}"
+                                   Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Tablas -->
+    <Style x:Key="AgarreColumna" TargetType="Thumb">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Template">
+            <Setter.Value><ControlTemplate TargetType="Thumb"><Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"/></ControlTemplate></Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="DataGridColumnHeader">
+        <Setter Property="Foreground" Value="{StaticResource Texto2}"/>
+        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="MinHeight" Value="44"/>
+        <Setter Property="Padding" Value="14,8"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" LineHeight="17"/></DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridColumnHeader">
+                    <Grid>
+                        <Border x:Name="Fondo" Background="Transparent" Padding="{TemplateBinding Padding}">
+                            <DockPanel>
+                                <Path x:Name="Orden" DockPanel.Dock="Right" Width="8" Height="5" Margin="6,0,0,0" Stretch="Fill"
+                                      Fill="{StaticResource Indigo600}" VerticalAlignment="Center" Visibility="Collapsed" Data="M0,5 L4,0 L8,5 Z"/>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </DockPanel>
+                        </Border>
+                        <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource AgarreColumna}"/>
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource AgarreColumna}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{StaticResource Texto}"/></Trigger>
+                        <Trigger Property="SortDirection" Value="Ascending"><Setter TargetName="Orden" Property="Visibility" Value="Visible"/></Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="Orden" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="Orden" Property="Data" Value="M0,0 L8,0 L4,5 Z"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CabeceraNumerica" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+    </Style>
+    <Style x:Key="CabeceraCentrada" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" TextAlignment="Center" LineHeight="17"/></DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="DataGridCell">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="14,0"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocoCelda}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border x:Name="Fondo" Background="Transparent" BorderBrush="Transparent" BorderThickness="1.5" Padding="{TemplateBinding Padding}">
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsReadOnly" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Fondo" Property="BorderBrush" Value="{StaticResource Indigo400}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEditing" Value="True">
+                            <Setter TargetName="Fondo" Property="Background" Value="{StaticResource Superficie}"/>
+                            <Setter TargetName="Fondo" Property="BorderBrush" Value="{StaticResource Indigo600}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- La línea entre filas va arriba de cada una, menos la primera: así la última no deja una línea suelta
+         que parece otra fila vacía cuando sobra espacio en la tabla. -->
+    <Style TargetType="DataGridRow">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Neutro100}"/>
+        <Setter Property="BorderThickness" Value="0,1,0,0"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                <Setter Property="BorderThickness" Value="0"/>
+            </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True"><Setter Property="Background" Value="{StaticResource FilaHover}"/></Trigger>
+            <Trigger Property="IsSelected" Value="True"><Setter Property="Background" Value="{StaticResource Indigo50}"/></Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="TextoCelda" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        <Setter Property="p:TextoRecortado.Avisar" Value="True"/>
+    </Style>
+    <Style x:Key="TextoCeldaNumero" TargetType="TextBlock" BasedOn="{StaticResource TextoCelda}">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Typography.NumeralAlignment" Value="Tabular"/>
+    </Style>
+    <Style x:Key="TextoCeldaCentro" TargetType="TextBlock" BasedOn="{StaticResource TextoCelda}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Typography.NumeralAlignment" Value="Tabular"/>
+    </Style>
+    <Style x:Key="TextoCeldaTenue" TargetType="TextBlock" BasedOn="{StaticResource TextoCelda}">
+        <Setter Property="Foreground" Value="{StaticResource Texto2}"/>
+    </Style>
+
+    <Style TargetType="DataGrid">
+        <Setter Property="FontSize" Value="13.5"/>
+        <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+        <Setter Property="Background" Value="{StaticResource Superficie}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Borde}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="CanUserReorderColumns" Value="False"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="GridLinesVisibility" Value="None"/>
+        <Setter Property="RowHeight" Value="44"/>
+        <Setter Property="SelectionMode" Value="Extended"/>
+        <Setter Property="SelectionUnit" Value="FullRow"/>
+        <Setter Property="EnableRowVirtualization" Value="True"/>
+        <Setter Property="EnableColumnVirtualization" Value="False"/>
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
+        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGrid">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10" SnapsToDevicePixels="True">
+                        <Grid>
+                            <ScrollViewer x:Name="DG_ScrollViewer" Focusable="False">
+                                <ScrollViewer.Template>
+                                    <ControlTemplate TargetType="ScrollViewer">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Border Grid.ColumnSpan="3" Background="{StaticResource CabeceraTabla}" CornerRadius="9,9,0,0"
+                                                    BorderBrush="{StaticResource Borde}" BorderThickness="0,0,0,1"/>
+                                            <Button Command="{x:Static DataGrid.SelectAllCommand}" Focusable="False"
+                                                    Style="{DynamicResource {ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}"
+                                                    Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.All}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                    Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                            <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.Column="1"
+                                                    Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Grid.Row="1" Grid.ColumnSpan="2"
+                                                                    CanContentScroll="{TemplateBinding CanContentScroll}"/>
+                                            <ScrollBar x:Name="PART_VerticalScrollBar" Grid.Column="2" Grid.Row="1" Orientation="Vertical"
+                                                       Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}"
+                                                       Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                                            <Grid Grid.Column="1" Grid.Row="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <ScrollBar x:Name="PART_HorizontalScrollBar" Grid.Column="1" Orientation="Horizontal"
+                                                           Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}"
+                                                           Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                           Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                                            </Grid>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </ScrollViewer.Template>
+                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                            <StackPanel x:Name="Vacio" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24,64,24,24"
+                                        Visibility="Collapsed" IsHitTestVisible="False">
+                                <Border Width="48" Height="48" CornerRadius="24" Background="{StaticResource Neutro100}" HorizontalAlignment="Center">
+                                    <p:Icono Datos="{StaticResource IcoBuscar}" Width="22" Height="22" TextElement.Foreground="{StaticResource Texto3}"/>
+                                </Border>
+                                <TextBlock Text="No hay registros para mostrar" Margin="0,12,0,0" HorizontalAlignment="Center"
+                                           Foreground="{StaticResource Texto2}" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="False"><Setter TargetName="Vacio" Property="Visibility" Value="Visible"/></Trigger>
+                        <Trigger Property="ItemsSource" Value="{x:Null}"><Setter TargetName="Vacio" Property="Visibility" Value="Collapsed"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Indicadores -->
+    <Style x:Key="BarraProgreso" TargetType="ProgressBar">
+        <Setter Property="Height" Value="6"/>
+        <Setter Property="Foreground" Value="{StaticResource Indigo500}"/>
+        <Setter Property="Background" Value="{StaticResource Neutro100}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Grid>
+                        <Border x:Name="PART_Track" CornerRadius="3" Background="{TemplateBinding Background}"/>
+                        <Border x:Name="PART_Indicator" CornerRadius="3" Background="{TemplateBinding Foreground}" HorizontalAlignment="Left"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BarraCarga" TargetType="ProgressBar">
+        <Setter Property="Height" Value="3"/>
+        <Setter Property="IsIndeterminate" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Border CornerRadius="1.5" Background="{StaticResource Indigo100}" ClipToBounds="True">
+                        <Border x:Name="Pulso" Width="140" CornerRadius="1.5" Background="{StaticResource Indigo500}" HorizontalAlignment="Left">
+                            <Border.RenderTransform><TranslateTransform x:Name="Desplazamiento" X="-140"/></Border.RenderTransform>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsVisible" Value="True">
+                            <Trigger.ExitActions><StopStoryboard BeginStoryboardName="Pulsar"/></Trigger.ExitActions>
+                            <Trigger.EnterActions>
+                            <BeginStoryboard x:Name="Pulsar">
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetName="Desplazamiento" Storyboard.TargetProperty="X"
+                                                     From="-140" To="1600" Duration="0:0:1.6">
+                                        <DoubleAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Tarjetas -->
+    <Style x:Key="Tarjeta" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource Superficie}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Borde}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="20"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+    <Style x:Key="Insignia" TargetType="Border">
+        <Setter Property="CornerRadius" Value="11"/>
+        <Setter Property="Padding" Value="9,3"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Raíz de cada pantalla: el contenido y, encima, la barra de carga que aparece si una operación tarda -->
+    <ControlTemplate x:Key="PlantillaVista" TargetType="UserControl">
+        <Grid>
+            <ContentPresenter/>
+            <ProgressBar x:Name="PART_Carga" Style="{DynamicResource BarraCarga}" VerticalAlignment="Top" Visibility="Collapsed" IsHitTestVisible="False"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- Dato destacado dentro de un indicador -->
+    <Style x:Key="Cifra" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="21"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Margin" Value="0,4,0,0"/>
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        <Setter Property="Foreground" Value="{DynamicResource Texto}"/>
+    </Style>
+
+    <!-- Círculo con icono al inicio de los diálogos -->
+    <Style x:Key="CirculoDialogo" TargetType="Border">
+        <Setter Property="Width" Value="44"/>
+        <Setter Property="Height" Value="44"/>
+        <Setter Property="CornerRadius" Value="22"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+    </Style>
+
+    <!-- Tecla en la ventana de atajos -->
+    <Style x:Key="Tecla" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource Neutro100}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Borde}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="6"/>
+        <Setter Property="Padding" Value="8,3"/>
+        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+</ResourceDictionary>

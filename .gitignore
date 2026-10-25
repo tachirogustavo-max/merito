@@ -1,0 +1,25 @@
+# Compilación
+**/bin/
+**/obj/
+salida/
+
+# Visual Studio y Python
+.vs/
+*.user
+*.suo
+__pycache__/
+*.pyc
+
+# Datos locales, herramientas descargadas y credenciales
+.datos/
+.herramientas/
+.evidencia/
+.privado/
+*.env
+!*.env.ejemplo
+*.cnf
+
+# Otros
+*.log
+*.zip
+*.bak

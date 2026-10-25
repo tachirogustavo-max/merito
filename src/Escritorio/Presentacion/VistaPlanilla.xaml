@@ -1,0 +1,94 @@
+﻿<p:VistaBase x:Class="Escritorio.Presentacion.VistaPlanilla"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:Escritorio.Presentacion"
+             mc:Ignorable="d" d:Language="es-VE" d:DesignWidth="1180" d:DesignHeight="760">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <TextBlock x:Name="Titulo" Style="{StaticResource TituloPagina}" FontSize="25" TextWrapping="Wrap" d:Text="Lógica de programación, sección A, 2-2026"/>
+            <!-- Carrera, docente y período; se llenan al cargar la planilla -->
+            <WrapPanel x:Name="Etiquetas" Margin="0,10,0,0"/>
+
+            <!-- Resumen en un renglón para pantallas bajas (laptops, Canaima); reemplaza a los indicadores -->
+            <TextBlock x:Name="ResumenCompacto" Style="{StaticResource TextoSecundario}" Margin="0,10,0,4" Visibility="Collapsed" TextWrapping="Wrap"
+                       d:Text="1 estudiante confirmado, 0 por revisar, plan al 100 %, publicado"/>
+            <UniformGrid x:Name="Indicadores" Columns="4" Margin="-6,20,-6,4">
+                <p:Indicador Icono="IcoUsuarios" Rotulo="Estudiantes confirmados">
+                    <TextBlock x:Name="Confirmados" Style="{StaticResource Cifra}" d:Text="32"/>
+                </p:Indicador>
+                <p:Indicador Icono="IcoAlerta" Rotulo="Matrícula por revisar">
+                    <TextBlock x:Name="PorRevisar" Style="{StaticResource Cifra}" d:Text="0"/>
+                </p:Indicador>
+                <p:Indicador Icono="IcoGrafico" Rotulo="Plan de evaluación">
+                    <TextBlock x:Name="Plan" Style="{StaticResource Cifra}" d:Text="100 % de 100 %"/>
+                    <p:Indicador.Extra>
+                        <ProgressBar x:Name="AvancePlan" Style="{StaticResource BarraProgreso}" Maximum="100" Margin="0,10,0,0" d:Value="100"/>
+                    </p:Indicador.Extra>
+                </p:Indicador>
+                <p:Indicador Icono="IcoPublicar" Rotulo="Estado de la planilla">
+                    <TextBlock x:Name="EstadoPlanilla" Style="{StaticResource Cifra}" d:Text="Publicado"/>
+                </p:Indicador>
+            </UniformGrid>
+
+            <DockPanel x:Name="Explicacion" Margin="0,12,0,14" Background="Transparent">
+                <p:Icono DockPanel.Dock="Left" Datos="{StaticResource IcoInfo}" Width="16" Height="16" Margin="0,1,8,0" VerticalAlignment="Top"
+                         TextElement.Foreground="{DynamicResource Texto3}"/>
+                <!-- Se arma con las reglas de calificación de la institución -->
+                <TextBlock x:Name="TextoReglas" Style="{StaticResource TextoNota}"
+                           d:Text="Los puntos conservan sus decimales. La definitiva se redondea una sola vez: menos de 0,50 baja, 0,50 exacto se queda y más de 0,50 sube. Se aprueba con 10. Una nota pendiente no cuenta como cero."/>
+            </DockPanel>
+        </StackPanel>
+
+        <p:FranjaAviso DockPanel.Dock="Bottom"/>
+
+        <TabControl>
+            <TabItem Header="Calificaciones">
+                <p:PanelTabla x:Name="PanelNotas" Buscar="Estudiante o cédula">
+                    <p:PanelTabla.Acciones>
+                        <WrapPanel>
+                            <p:BotonAccion x:Name="BotonCargar" Texto="Cargar notas" Icono="IcoEditar" Atajo="Ctrl+N" Click="CargarNotas_Click"
+                                           ToolTip="Las notas de una evaluación para todo el grupo. Para corregir las de un estudiante, doble clic en su fila."/>
+                            <p:BotonAccion x:Name="BotonPublicar" Texto="Publicar avance" Icono="IcoPublicar" Secundario="True" Click="Publicar_Click"/>
+                            <p:BotonAccion Texto="Recargar planilla" Icono="IcoActualizar" Secundario="True" Atajo="F5" Click="Recargar_Click"/>
+                        </WrapPanel>
+                    </p:PanelTabla.Acciones>
+                    <!-- Las columnas dependen del plan de evaluación y se crean al cargar -->
+                    <DataGrid x:Name="Notas" FrozenColumnCount="2"/>
+                </p:PanelTabla>
+            </TabItem>
+
+            <TabItem Header="Evaluaciones">
+                <p:PanelTabla x:Name="PanelEvaluaciones">
+                    <p:PanelTabla.Acciones>
+                        <WrapPanel x:Name="AccionesEvaluaciones">
+                            <p:BotonAccion Texto="Agregar evaluación" Icono="IcoAgregar" Atajo="Ctrl+U" Click="AgregarEvaluacion_Click"/>
+                            <p:BotonAccion Texto="Corregir evaluación" Icono="IcoEditar" Secundario="True" Click="CorregirEvaluacion_Click"/>
+                            <p:BotonAccion Texto="Eliminar evaluación vacía" Icono="IcoBorrar" Secundario="True" Click="EliminarEvaluacion_Click"/>
+                        </WrapPanel>
+                    </p:PanelTabla.Acciones>
+                    <p:Rejilla x:Name="Evaluaciones" d:ItemsSource="{x:Static p:Muestras.Evaluaciones}" Columnas="Evaluación=Nombre; Ponderación=Peso; Orden=Orden"/>
+                </p:PanelTabla>
+            </TabItem>
+
+            <TabItem Header="Matrícula">
+                <p:PanelTabla x:Name="PanelMatricula" Buscar="Estudiante o cédula">
+                    <p:PanelTabla.Acciones>
+                        <WrapPanel>
+                            <p:BotonAccion Texto="Importar Excel" Icono="IcoImportar" Click="Importar_Click"/>
+                            <p:BotonAccion Texto="Descargar plantilla" Icono="IcoDescargar" Secundario="True" Click="Plantilla_Click"/>
+                            <p:BotonAccion x:Name="BotonConfirmar" Texto="Confirmar seleccionados" Icono="IcoCheck" Secundario="True" Click="Confirmar_Click"/>
+                            <p:BotonAccion x:Name="BotonRechazar" Texto="Rechazar seleccionados" Icono="IcoCerrar" Secundario="True" Click="Rechazar_Click"/>
+                            <p:BotonAccion x:Name="BotonRetirar" Texto="Retirar de la materia" Icono="IcoBorrar" Secundario="True" Click="Retirar_Click"
+                                           ToolTip="Para quien quedó inscrito por error o no cursa esta materia"/>
+                            <p:BotonAccion Texto="Códigos de acceso" Icono="IcoLlave" Secundario="True" Click="Codigos_Click"
+                                           ToolTip="Hoja para entregar en clase los códigos de quienes aún no activaron su cuenta"/>
+                        </WrapPanel>
+                    </p:PanelTabla.Acciones>
+                    <p:Rejilla x:Name="Alumnos" d:ItemsSource="{x:Static p:Muestras.Alumnos}" Columnas="Cédula=Cedula; Nombres=Nombres; Apellidos=Apellidos; Estado=Estado"/>
+                </p:PanelTabla>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</p:VistaBase>

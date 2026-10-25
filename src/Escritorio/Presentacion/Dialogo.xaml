@@ -1,0 +1,37 @@
+﻿<p:VentanaBase x:Class="Escritorio.Presentacion.Dialogo"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:p="clr-namespace:Escritorio.Presentacion"
+               mc:Ignorable="d" d:Language="es-VE"
+               Width="480" SizeToContent="Height" ResizeMode="NoResize" MostrarTitulo="False">
+    <!-- Mensaje o confirmación. El icono, los colores y los botones dependen del tono que se pide al abrirlo. -->
+    <StackPanel Margin="28,4,28,26">
+        <DockPanel>
+            <Border x:Name="Circulo" DockPanel.Dock="Left" Style="{StaticResource CirculoDialogo}" Background="{DynamicResource Indigo50}">
+                <p:Icono x:Name="Simbolo" Datos="{StaticResource IcoInfo}" Width="22" Height="22" TextElement.Foreground="{DynamicResource Indigo700}"/>
+            </Border>
+            <StackPanel Margin="16,2,0,0">
+                <TextBlock x:Name="Titulo" Style="{StaticResource TituloDialogo}" d:Text="Cerrar período"/>
+                <ScrollViewer MaxHeight="320" Margin="0,8,0,0" VerticalScrollBarVisibility="Auto" Focusable="False">
+                    <TextBlock x:Name="Mensaje" TextWrapping="Wrap" Foreground="{DynamicResource Texto2}" LineHeight="21"
+                               d:Text="¿Cerrar el período 2-2026? Las calificaciones quedarán bloqueadas para edición."/>
+                </ScrollViewer>
+                <!-- Referencia del error, para que administración la busque en el registro -->
+                <Border x:Name="BloqueReferencia" Background="{DynamicResource Neutro100}" CornerRadius="8" Padding="10,4,4,4" Margin="0,14,0,0" Visibility="Collapsed">
+                    <DockPanel>
+                        <Button x:Name="CopiarReferencia" DockPanel.Dock="Right" Style="{StaticResource BotonSutil}" MinHeight="28" Padding="8,0" Content="Copiar"
+                                Margin="8,0,0,0" Click="CopiarReferencia_Click"/>
+                        <TextBlock x:Name="Referencia" FontFamily="{StaticResource FuenteCodigo}" FontSize="12.5" Foreground="{DynamicResource Texto2}"
+                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    </DockPanel>
+                </Border>
+            </StackPanel>
+        </DockPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,26,0,0">
+            <Button x:Name="Cancelar" Style="{StaticResource BotonSecundario}" IsCancel="True" Margin="0,0,10,0" MinWidth="104" d:Content="Cancelar"/>
+            <Button x:Name="Aceptar" IsDefault="True" MinWidth="104" Click="Aceptar_Click" d:Content="Cerrar período"/>
+        </StackPanel>
+    </StackPanel>
+</p:VentanaBase>

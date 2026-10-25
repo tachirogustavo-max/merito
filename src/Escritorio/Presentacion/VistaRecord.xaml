@@ -1,0 +1,115 @@
+﻿<p:VistaBase x:Class="Escritorio.Presentacion.VistaRecord"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:Escritorio.Presentacion"
+             mc:Ignorable="d" d:Language="es-VE" d:DesignWidth="1000" d:DesignHeight="700">
+    <p:VistaBase.Resources>
+        <p:ConvertidorInsignia x:Key="FondoCondicion" Modo="fondo"/>
+        <p:ConvertidorInsignia x:Key="TextoCondicion" Modo="texto"/>
+        <p:ConvertidorInsignia x:Key="FondoPeriodo" Modo="fondo" Campo="Cerrado"/>
+        <p:ConvertidorInsignia x:Key="TextoPeriodo" Modo="texto" Campo="Cerrado"/>
+        <p:ConvertidorInsignia x:Key="EtiquetaPeriodo" Modo="etiqueta" Campo="Cerrado"/>
+        <BooleanToVisibilityConverter x:Key="Visible"/>
+
+        <!-- Tarjeta de una materia: nombre, avance, definitiva y detalle de cada evaluación -->
+        <DataTemplate x:Key="TarjetaMateria">
+            <Border Style="{StaticResource Tarjeta}" Margin="0,0,0,18" Padding="24,22,24,18">
+                <StackPanel>
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Right" VerticalAlignment="Top" HorizontalAlignment="Right">
+                            <Border x:Name="Circulo" Width="72" Height="72" CornerRadius="36" Background="{DynamicResource Neutro100}">
+                                <TextBlock x:Name="Definitiva" Text="{Binding Definitiva}" FontSize="12.5" FontWeight="SemiBold" FontFamily="{StaticResource FuenteTitulo}"
+                                           Foreground="{DynamicResource Texto3}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Definitiva" Style="{StaticResource TextoNota}" HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                            <Border Style="{StaticResource Insignia}" HorizontalAlignment="Center" Margin="0,6,0,0"
+                                    Background="{Binding Condicion, Converter={StaticResource FondoCondicion}}"
+                                    Visibility="{Binding TieneCondicion, Converter={StaticResource Visible}}">
+                                <TextBlock Text="{Binding CondicionTexto}" FontSize="12.5" FontWeight="SemiBold"
+                                           Foreground="{Binding Condicion, Converter={StaticResource TextoCondicion}}"/>
+                            </Border>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,20,0">
+                            <TextBlock Text="{Binding Materia}" Style="{StaticResource TituloSeccion}"/>
+                            <TextBlock Text="{Binding Detalle}" Style="{StaticResource TextoSecundario}" Margin="0,4,0,14"/>
+                            <TextBlock Text="{Binding Acumulado}" Foreground="{DynamicResource Texto}" FontWeight="SemiBold" FontSize="13.5"/>
+                            <ProgressBar Style="{StaticResource BarraProgreso}" Maximum="100" Value="{Binding Avance, Mode=OneWay}"
+                                         Width="420" MaxWidth="420" HorizontalAlignment="Left" Margin="0,6,0,0"/>
+                        </StackPanel>
+                    </DockPanel>
+                    <p:Rejilla ItemsSource="{Binding Evaluaciones}" RowHeight="40" VerticalScrollBarVisibility="Disabled" Margin="0,18,0,0" CedeRueda="True"
+                               Columnas="Evaluación=Evaluacion; Ponderación=Peso; Nota=Nota; Puntos=AporteSobreVeinte"/>
+                    <TextBlock Text="{Binding Publicacion}" Style="{StaticResource TextoNota}" Margin="2,12,0,0"/>
+                </StackPanel>
+            </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding TieneDefinitiva}" Value="True">
+                    <Setter TargetName="Circulo" Property="Background" Value="{DynamicResource Indigo600}"/>
+                    <Setter TargetName="Definitiva" Property="Foreground" Value="White"/>
+                    <Setter TargetName="Definitiva" Property="FontSize" Value="26"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DefinitivaConDecimales}" Value="True">
+                    <Setter TargetName="Definitiva" Property="FontSize" Value="21"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </p:VistaBase.Resources>
+
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <WrapPanel>
+                <p:BotonAccion Texto="Descargar PDF" Icono="IcoDescargar" Secundario="True" Atajo="F12" Click="Pdf_Click"/>
+                <p:BotonAccion Texto="Exportar CSV" Icono="IcoImportar" Secundario="True" Click="Csv_Click"/>
+                <p:BotonAccion Texto="Imprimir" Icono="IcoImprimir" Secundario="True" Atajo="Ctrl+P" Click="Imprimir_Click"/>
+            </WrapPanel>
+            <UniformGrid Columns="4" Margin="-6,6,-6,22">
+                <p:Indicador x:Name="IndicadorIndice" Icono="IcoGrafico" Rotulo="Índice académico">
+                    <TextBlock x:Name="Promedio" Style="{StaticResource Cifra}" FontSize="26" d:Text="14,25 /20"/>
+                </p:Indicador>
+                <p:Indicador Icono="IcoLibro" Rotulo="Con notas publicadas">
+                    <TextBlock x:Name="Publicadas" Style="{StaticResource Cifra}" d:Text="4"/>
+                </p:Indicador>
+                <p:Indicador Icono="IcoCheck" Rotulo="UC aprobadas" ToolTip="Unidades de crédito de las materias aprobadas en períodos cerrados">
+                    <TextBlock x:Name="UcAprobadas" Style="{StaticResource Cifra}" d:Text="48"/>
+                </p:Indicador>
+                <p:Indicador Icono="IcoEscudo" Rotulo="Aprobadas">
+                    <TextBlock x:Name="Aprobadas" Style="{StaticResource Cifra}" d:Text="3"/>
+                </p:Indicador>
+            </UniformGrid>
+        </StackPanel>
+        <p:FranjaAviso DockPanel.Dock="Bottom"/>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+            <StackPanel Margin="0,0,12,0">
+                <!-- Sin notas publicadas -->
+                <StackPanel x:Name="SinNotas" HorizontalAlignment="Center" Margin="0,40,0,0" MaxWidth="420" Visibility="Collapsed">
+                    <Border Width="60" Height="60" CornerRadius="30" Background="{DynamicResource Indigo50}">
+                        <p:Icono Datos="{StaticResource IcoRecord}" Width="26" Height="26" TextElement.Foreground="{DynamicResource Indigo500}"/>
+                    </Border>
+                    <TextBlock Text="Todavía no hay notas publicadas" Style="{StaticResource TituloSeccion}" HorizontalAlignment="Center" Margin="0,16,0,6"/>
+                    <TextBlock Text="Tus docentes pueden guardar borradores antes de publicar un avance. Cuando lo hagan, aparecerá aquí."
+                               Style="{StaticResource TextoSecundario}" TextAlignment="Center"/>
+                </StackPanel>
+
+                <ItemsControl x:Name="Periodos" Focusable="False" d:ItemsSource="{x:Static p:Muestras.Periodos}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,6,0,14">
+                                    <TextBlock Text="{Binding Titulo}" Style="{StaticResource TituloSeccion}" VerticalAlignment="Center"/>
+                                    <Border Style="{StaticResource Insignia}" Margin="12,0,0,0" Background="{Binding Cerrado, Converter={StaticResource FondoPeriodo}}">
+                                        <TextBlock Text="{Binding Cerrado, Converter={StaticResource EtiquetaPeriodo}}" FontSize="12.5" FontWeight="SemiBold"
+                                                   Foreground="{Binding Cerrado, Converter={StaticResource TextoPeriodo}}"/>
+                                    </Border>
+                                </StackPanel>
+                                <ItemsControl ItemsSource="{Binding Materias}" ItemTemplate="{StaticResource TarjetaMateria}" Focusable="False"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</p:VistaBase>

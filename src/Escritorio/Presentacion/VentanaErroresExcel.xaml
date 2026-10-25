@@ -1,0 +1,27 @@
+﻿<p:VentanaBase x:Class="Escritorio.Presentacion.VentanaErroresExcel"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:p="clr-namespace:Escritorio.Presentacion"
+               mc:Ignorable="d" d:Language="es-VE"
+               Title="Revisa el archivo" Width="760" Height="560" MinWidth="560" MinHeight="380"
+               WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <DockPanel Margin="30,4,30,24">
+        <DockPanel DockPanel.Dock="Top" Margin="0,0,0,18">
+            <Border DockPanel.Dock="Left" Style="{StaticResource CirculoDialogo}" Background="{DynamicResource AvisoSuave}">
+                <p:Icono Datos="{StaticResource IcoAlerta}" Width="22" Height="22" TextElement.Foreground="{DynamicResource Aviso}"/>
+            </Border>
+            <StackPanel Margin="16,2,0,0">
+                <TextBlock x:Name="Titulo" Style="{StaticResource TituloDialogo}" d:Text="Hay 2 filas por corregir"/>
+                <TextBlock x:Name="Detalle" Style="{StaticResource TextoSecundario}" Margin="0,6,0,0"
+                           d:Text="No se importó ninguna fila. Corrige estos datos en el Excel y vuelve a importarlo."/>
+            </StackPanel>
+        </DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
+            <Button x:Name="Copiar" Content="Copiar lista" Style="{StaticResource BotonSecundario}" MinWidth="120" Margin="0,0,10,0" Click="Copiar_Click"/>
+            <Button Content="Entendido" IsDefault="True" IsCancel="True" MinWidth="110" Click="Entendido_Click"/>
+        </StackPanel>
+        <p:Rejilla x:Name="Errores" Columnas="Fila=Fila; Problema=Problema" AjustarTexto="True" RowHeight="NaN" MinRowHeight="44"/>
+    </DockPanel>
+</p:VentanaBase>

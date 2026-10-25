@@ -1,0 +1,63 @@
+﻿<p:VentanaBase x:Class="Escritorio.Presentacion.VentanaAtajos"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:p="clr-namespace:Escritorio.Presentacion"
+               Title="Atajos de teclado" Width="560" Height="640" ResizeMode="NoResize"
+               ShowInTaskbar="False" MostrarTitulo="False" WindowStartupLocation="CenterOwner">
+    <p:VentanaBase.Resources>
+        <!-- Una fila: la combinación de teclas y lo que hace -->
+        <Style x:Key="Atajo" TargetType="DockPanel">
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+        <Style x:Key="TextoTecla" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="{StaticResource FuenteCodigo}"/>
+            <Setter Property="FontSize" Value="12.5"/>
+            <Setter Property="Foreground" Value="{DynamicResource Texto}"/>
+        </Style>
+        <Style x:Key="Accion" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="14,0,0,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="Grupo" TargetType="TextBlock" BasedOn="{StaticResource Rotulo}">
+            <Setter Property="Margin" Value="0,18,0,8"/>
+        </Style>
+    </p:VentanaBase.Resources>
+
+    <DockPanel>
+    <!-- El botón queda fijo abajo; solo la lista se desplaza -->
+    <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource Borde}" BorderThickness="0,1,0,0" Padding="30,14,30,22">
+        <Button x:Name="Cerrar" Content="Entendido" IsDefault="True" IsCancel="True" MinWidth="110" HorizontalAlignment="Right" Click="Cerrar_Click"/>
+    </Border>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+        <StackPanel Margin="30,0,30,16">
+            <TextBlock Text="Atajos de teclado" Style="{StaticResource TituloDialogo}" FontSize="21"/>
+            <TextBlock Text="Las combinaciones siguen las de Word en español." Style="{StaticResource TextoSecundario}" Margin="0,6,0,8"/>
+
+            <TextBlock Text="En todo el programa" Style="{StaticResource Grupo}"/>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="F1" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Ver estos atajos" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Ctrl+1, Ctrl+2" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Cambiar de sección" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Ctrl+B" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Buscar en la lista visible" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="F5" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Actualizar la información" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Tab y Mayús+Tab" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Pasar al control siguiente o anterior" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Enter" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Aceptar" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Esc" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Cancelar o cerrar el diálogo" Style="{StaticResource Accion}"/></DockPanel>
+
+            <TextBlock Text="Listas" Style="{StaticResource Grupo}"/>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Flechas" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Moverse entre filas" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Enter o Ctrl+A" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Abrir la fila seleccionada" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Ctrl+U" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Crear un registro nuevo" Style="{StaticResource Accion}"/></DockPanel>
+
+            <TextBlock Text="Planilla de calificaciones" Style="{StaticResource Grupo}"/>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Ctrl+N" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Cargar las notas de una evaluación" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Enter o doble clic" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Corregir las notas del estudiante" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Ctrl+U" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Agregar evaluación" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Ctrl+W" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Cerrar la planilla" Style="{StaticResource Accion}"/></DockPanel>
+
+            <TextBlock Text="Récord académico" Style="{StaticResource Grupo}"/>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="Ctrl+P" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Imprimir" Style="{StaticResource Accion}"/></DockPanel>
+            <DockPanel Style="{StaticResource Atajo}"><Border Style="{StaticResource Tecla}"><TextBlock Text="F12" Style="{StaticResource TextoTecla}"/></Border><TextBlock Text="Guardar como PDF" Style="{StaticResource Accion}"/></DockPanel>
+        </StackPanel>
+    </ScrollViewer>
+    </DockPanel>
+</p:VentanaBase>

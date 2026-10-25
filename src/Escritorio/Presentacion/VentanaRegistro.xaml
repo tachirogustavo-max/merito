@@ -1,0 +1,53 @@
+<p:VentanaBase x:Class="Escritorio.Presentacion.VentanaRegistro"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:p="clr-namespace:Escritorio.Presentacion"
+               mc:Ignorable="d" d:Language="es-VE"
+               Title="Crear o recuperar acceso" Width="480" SizeToContent="Height" ResizeMode="NoResize"
+               WindowStartupLocation="CenterOwner" ShowInTaskbar="False" MostrarTitulo="False">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+        <StackPanel Margin="32,0,32,28">
+            <!-- Dos pasos: la cédula, y luego el código que llegó al correo con la contraseña nueva -->
+            <TextBlock x:Name="Paso" Text="PASO 1 DE 2" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource Indigo600}" Margin="0,0,0,8"/>
+            <TextBlock x:Name="Titulo" Text="Crea o recupera tu acceso" Style="{StaticResource TituloDialogo}" FontSize="21"/>
+
+            <StackPanel x:Name="PasoCedula">
+                <TextBlock Style="{StaticResource TextoSecundario}" Margin="0,8,0,22" TextWrapping="Wrap"
+                           Text="Escribe tu cédula. Te enviaremos un código al correo que registró la universidad con tu matrícula."/>
+                <Label Content="_Cédula" Target="{Binding ElementName=Cedula}"/>
+                <TextBox x:Name="Cedula" Style="{StaticResource CampoIcono}" Tag="{StaticResource IcoUsuario}" MaxLength="16"
+                         p:Sugerencias.Texto="V-12345678" AutomationProperties.Name="Cédula"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,26,0,0">
+                    <Button Content="Cancelar" IsCancel="True" Style="{StaticResource BotonSecundario}" MinWidth="104" Margin="0,0,10,0"/>
+                    <Button x:Name="Enviar" Content="Enviarme el código" IsDefault="True" MinWidth="150" Click="Enviar_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel x:Name="PasoCodigo" Visibility="Collapsed" d:Visibility="Visible">
+                <TextBlock x:Name="Enviado" Style="{StaticResource TextoSecundario}" Margin="0,8,0,22" TextWrapping="Wrap"
+                           d:Text="Te enviamos un código de 6 cifras a d•••••s@gmail.com. Vence a las 10:45; revisa también el correo no deseado."/>
+                <Label Content="Có_digo del correo" Target="{Binding ElementName=Codigo}"/>
+                <TextBox x:Name="Codigo" MaxLength="7" FontFamily="{StaticResource FuenteCodigo}" FontSize="20" Padding="14,10"
+                         HorizontalContentAlignment="Center" AutomationProperties.Name="Código del correo"/>
+                <Button x:Name="Reenviar" Content="¿No te llegó? Enviar otro código" Style="{StaticResource BotonSutil}" Click="Reenviar_Click" IsEnabled="False"
+                        HorizontalAlignment="Left" Margin="-12,4,0,10"/>
+                <Label Content="Contraseña _nueva" Target="{Binding ElementName=Nueva}"/>
+                <PasswordBox x:Name="Nueva" Style="{StaticResource ClaveIcono}" Tag="{StaticResource IcoCandado}" MaxLength="128" AutomationProperties.Name="Contraseña nueva"/>
+                <TextBlock Text="Mínimo 12 caracteres. Puede ser una frase que recuerdes." Style="{StaticResource TextoNota}" Margin="2,6,0,16"/>
+                <Label Content="_Repetir contraseña" Target="{Binding ElementName=Repetir}"/>
+                <PasswordBox x:Name="Repetir" Style="{StaticResource ClaveIcono}" Tag="{StaticResource IcoCandado}" MaxLength="128" AutomationProperties.Name="Repetir contraseña"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,26,0,0">
+                    <Button Content="Cancelar" IsCancel="True" Style="{StaticResource BotonSecundario}" MinWidth="104" Margin="0,0,10,0"/>
+                    <Button x:Name="Guardar" Content="Guardar contraseña" IsDefault="True" MinWidth="150" Click="Guardar_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Mensaje de error o aviso, sin cerrar la ventana -->
+            <Border x:Name="Alerta" CornerRadius="10" Padding="12,10" Margin="0,18,0,0" BorderThickness="1" Visibility="Collapsed">
+                <TextBlock x:Name="Mensaje" TextWrapping="Wrap" LineHeight="20"/>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</p:VentanaBase>

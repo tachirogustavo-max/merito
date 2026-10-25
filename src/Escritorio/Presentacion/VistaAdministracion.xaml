@@ -1,0 +1,193 @@
+﻿<p:VistaBase x:Class="Escritorio.Presentacion.VistaAdministracion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:Escritorio.Presentacion"
+             mc:Ignorable="d" d:Language="es-VE" d:DesignWidth="1040" d:DesignHeight="640">
+    <DockPanel>
+        <p:FranjaAviso DockPanel.Dock="Bottom"/>
+
+        <TabControl x:Name="Pestanas">
+            <!-- Estructura académica -->
+            <TabItem AutomationProperties.Name="Estructura">
+                <TabItem.Header><p:IconoTexto Icono="IcoCapas" Texto="Estructura"/></TabItem.Header>
+                <TabControl x:Name="Estructura" Style="{StaticResource PestanasSegmentadas}">
+                    <TabItem Header="Carreras">
+                        <p:PanelTabla x:Name="PanelCarreras" Buscar="Buscar en la lista" Margin="0,14,0,0">
+                            <p:PanelTabla.Acciones>
+                                <WrapPanel>
+                                    <p:BotonAccion Texto="Agregar" Icono="IcoAgregar" Atajo="Ctrl+U" Click="AgregarCarrera_Click"/>
+                                    <p:BotonAccion Texto="Corregir" Icono="IcoEditar" Secundario="True" Click="CorregirCarrera_Click"/>
+                                </WrapPanel>
+                            </p:PanelTabla.Acciones>
+                            <p:Rejilla x:Name="Carreras" Columnas="Carrera=Nombre; Código=Codigo"/>
+                        </p:PanelTabla>
+                    </TabItem>
+                    <TabItem Header="Pensum">
+                        <DockPanel Margin="0,14,0,0">
+                            <!-- El pensum se ve por carrera; una materia del ciclo básico aparece en el de cada carrera que la tiene -->
+                            <Grid DockPanel.Dock="Top" Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="_Carrera" Target="{Binding Caja, ElementName=CarreraPensum}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <p:ListaBuscable x:Name="CarreraPensum" Grid.Column="1" DisplayMemberPath="Nombre" Ayuda="Elige la carrera" AutomationProperties.Name="Carrera del pensum"/>
+                                <TextBlock x:Name="ResumenPensum" Grid.Column="2" Margin="16,0,0,0" VerticalAlignment="Center" Style="{StaticResource TextoSecundario}"
+                                           d:Text="42 materias, 186 UC en 10 semestres" TextTrimming="CharacterEllipsis"/>
+                                <!-- El pensum completo de una carrera también llega por Excel -->
+                                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <p:BotonAccion Texto="Importar Excel" Icono="IcoImportar" Secundario="True" Margin="12,0,0,0" VerticalAlignment="Center" Click="ImportarPensum_Click"/>
+                                    <p:BotonAccion Texto="Plantilla" Icono="IcoDescargar" Secundario="True" Margin="10,0,0,0" VerticalAlignment="Center" Click="PlantillaPensum_Click"/>
+                                </StackPanel>
+                            </Grid>
+                            <p:PanelTabla x:Name="PanelMaterias" Buscar="Código o materia">
+                                <p:PanelTabla.Acciones>
+                                    <WrapPanel>
+                                        <p:BotonAccion Texto="Materia nueva" Icono="IcoAgregar" Atajo="Ctrl+U" Click="AgregarMateria_Click"/>
+                                        <p:BotonAccion Texto="Agregar existente" Icono="IcoCopiar" Secundario="True" Click="AgregarExistente_Click"
+                                                       ToolTip="Para materias que ya están en otra carrera, como las del ciclo básico"/>
+                                        <p:BotonAccion Texto="Corregir" Icono="IcoEditar" Secundario="True" Click="CorregirMateria_Click"/>
+                                        <p:BotonAccion Texto="Quitar del pensum" Icono="IcoBorrar" Secundario="True" Click="QuitarMateria_Click"/>
+                                    </WrapPanel>
+                                </p:PanelTabla.Acciones>
+                                <p:Rejilla x:Name="Materias" d:ItemsSource="{x:Static p:Muestras.Pensum}"
+                                           Columnas="Semestre=SemestreTexto; Código=Codigo; Materia=Nombre; UC=Uc; Aprueba con=AprobatoriaTexto; Compartida=Compartida"/>
+                            </p:PanelTabla>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Secciones">
+                        <p:PanelTabla x:Name="PanelSecciones" Buscar="Buscar en la lista" Margin="0,14,0,0">
+                            <p:PanelTabla.Acciones>
+                                <WrapPanel>
+                                    <p:BotonAccion Texto="Agregar" Icono="IcoAgregar" Atajo="Ctrl+U" Click="AgregarSeccion_Click"/>
+                                    <p:BotonAccion Texto="Corregir" Icono="IcoEditar" Secundario="True" Click="CorregirSeccion_Click"/>
+                                    <p:BotonAccion Texto="Formato del código" Icono="IcoCapas" Secundario="True" Click="FormatoCodigo_Click"/>
+                                </WrapPanel>
+                            </p:PanelTabla.Acciones>
+                            <p:Rejilla x:Name="Secciones" Columnas="Código=Codigo; Carrera=Carrera; Semestre=SemestreTexto; Sección=Nombre"/>
+                        </p:PanelTabla>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+
+            <!-- Docentes: la nómina, creada a mano o importada desde Excel -->
+            <TabItem AutomationProperties.Name="Docentes">
+                <TabItem.Header><p:IconoTexto Icono="IcoLibro" Texto="Docentes"/></TabItem.Header>
+                <p:PanelTabla x:Name="PanelDocentes" Buscar="Cédula, nombre o correo">
+                    <p:PanelTabla.Acciones>
+                        <WrapPanel>
+                            <p:BotonAccion Texto="Agregar docente" Icono="IcoAgregar" Atajo="Ctrl+U" Click="CrearDocente_Click"/>
+                            <p:BotonAccion Texto="Importar nómina" Icono="IcoImportar" Secundario="True" Click="ImportarNomina_Click"/>
+                            <p:BotonAccion Texto="Plantilla" Icono="IcoDescargar" Secundario="True" Click="PlantillaNomina_Click"/>
+                            <p:BotonAccion Texto="Corregir correo" Icono="IcoEditar" Secundario="True" Click="CorregirCorreo_Click"/>
+                            <p:BotonAccion Texto="Código de acceso" Icono="IcoLlave" Secundario="True" Click="EmitirCodigo_Click"/>
+                            <p:BotonAccion Texto="Activar o desactivar" Icono="IcoEncendido" Secundario="True" Click="CambiarEstado_Click"/>
+                        </WrapPanel>
+                    </p:PanelTabla.Acciones>
+                    <p:Rejilla x:Name="Docentes" Columnas="Cédula=Cedula; Docente=NombreCompleto; Correo=Correo; Materias en curso=Materias; Estado=EstadoCuenta"/>
+                </p:PanelTabla>
+            </TabItem>
+
+            <!-- Carga académica -->
+            <TabItem AutomationProperties.Name="Carga académica">
+                <TabItem.Header><p:IconoTexto Icono="IcoAsignacion" Texto="Carga académica"/></TabItem.Header>
+                <p:PanelTabla x:Name="PanelCarga" Buscar="Materia, sección o docente">
+                    <p:PanelTabla.Acciones>
+                        <WrapPanel>
+                            <p:BotonAccion Texto="Asignar por sección" Icono="IcoAgregar" Atajo="Ctrl+U" Click="AsignarPorSeccion_Click"/>
+                            <p:BotonAccion Texto="Copiar de otro período" Icono="IcoCopiar" Secundario="True" Click="CopiarCarga_Click"/>
+                            <p:BotonAccion Texto="Asignar una materia" Icono="IcoAsignacion" Secundario="True" Click="AsignarUna_Click"/>
+                            <p:BotonAccion Texto="Cambiar docente" Icono="IcoIntercambio" Secundario="True" Click="CambiarDocente_Click"/>
+                            <p:BotonAccion Texto="Retirar" Icono="IcoBorrar" Secundario="True" Click="Retirar_Click"/>
+                        </WrapPanel>
+                    </p:PanelTabla.Acciones>
+                    <p:Rejilla x:Name="Ofertas" d:ItemsSource="{x:Static p:Muestras.Ofertas}" Columnas="Período=Periodo; Materia=Materia; Carrera=Carrera; Sección=Seccion; Docente=Docente"/>
+                </p:PanelTabla>
+            </TabItem>
+
+            <!-- Estudiantes: los inscritos de cada período, por sección -->
+            <TabItem AutomationProperties.Name="Estudiantes">
+                <TabItem.Header><p:IconoTexto Icono="IcoUsuarios" Texto="Estudiantes"/></TabItem.Header>
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top" Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="_Período" Target="{Binding Caja, ElementName=FiltroPeriodo}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <p:ListaBuscable x:Name="FiltroPeriodo" Grid.Column="1" DisplayMemberPath="Nombre" AutomationProperties.Name="Período de los estudiantes"/>
+                        <Label Grid.Column="3" Content="_Sección" Target="{Binding Caja, ElementName=FiltroSeccion}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <p:ListaBuscable x:Name="FiltroSeccion" Grid.Column="4" DisplayMemberPath="Nombre" AutomationProperties.Name="Sección de los estudiantes"/>
+                    </Grid>
+                    <p:PanelTabla x:Name="PanelEstudiantes" Buscar="Cédula, nombre o correo">
+                        <p:PanelTabla.Acciones>
+                            <WrapPanel>
+                                <p:BotonAccion Texto="Importar estudiantes" Icono="IcoImportar" Click="ImportarMatricula_Click"
+                                               ToolTip="El Excel de inscritos del período, con todas las secciones"/>
+                                <p:BotonAccion Texto="Plantilla" Icono="IcoDescargar" Secundario="True" Click="PlantillaMatricula_Click"/>
+                                <p:BotonAccion Texto="Agregar estudiante" Icono="IcoAgregar" Secundario="True" Click="CrearEstudiante_Click"/>
+                                <p:BotonAccion Texto="Corregir correo" Icono="IcoEditar" Secundario="True" Click="CorregirCorreo_Click"/>
+                                <p:BotonAccion Texto="Código de acceso" Icono="IcoLlave" Secundario="True" Click="EmitirCodigo_Click"/>
+                                <p:BotonAccion Texto="Activar o desactivar" Icono="IcoEncendido" Secundario="True" Click="CambiarEstado_Click"/>
+                            </WrapPanel>
+                        </p:PanelTabla.Acciones>
+                        <p:Rejilla x:Name="Estudiantes" Columnas="Cédula=Cedula; Estudiante=NombreCompleto; Correo=Correo; Sección=SeccionesTexto; Materias=Materias; Estado=EstadoCuenta"/>
+                    </p:PanelTabla>
+                </DockPanel>
+            </TabItem>
+
+            <!-- Períodos -->
+            <TabItem AutomationProperties.Name="Períodos">
+                <TabItem.Header><p:IconoTexto Icono="IcoCalendario" Texto="Períodos"/></TabItem.Header>
+                <p:PanelTabla x:Name="PanelPeriodos">
+                    <p:PanelTabla.Acciones>
+                        <WrapPanel>
+                            <p:BotonAccion Texto="Nuevo período" Icono="IcoAgregar" Atajo="Ctrl+U" Click="NuevoPeriodo_Click"/>
+                            <p:BotonAccion Texto="Corregir nombre" Icono="IcoEditar" Secundario="True" Click="CorregirPeriodo_Click"/>
+                            <p:BotonAccion Texto="Revisar cierre" Icono="IcoEscudo" Secundario="True" Click="RevisarCierre_Click"/>
+                            <p:BotonAccion Texto="Cerrar período" Icono="IcoCandado" Secundario="True" Click="CerrarPeriodo_Click"/>
+                            <p:BotonAccion Texto="Reglas de calificación" Icono="IcoGrafico" Secundario="True" Click="Reglas_Click"/>
+                        </WrapPanel>
+                    </p:PanelTabla.Acciones>
+                    <p:Rejilla x:Name="Periodos" Columnas="Período=Nombre; Estado=Cerrado"/>
+                </p:PanelTabla>
+            </TabItem>
+
+            <!-- Historial de cambios: quién cambió notas, matrícula o estructura, y cuándo -->
+            <TabItem AutomationProperties.Name="Historial de cambios">
+                <TabItem.Header><p:IconoTexto Icono="IcoActividad" Texto="Historial de cambios"/></TabItem.Header>
+                <p:PanelTabla x:Name="PanelActividad" Buscar="Persona, materia o período">
+                    <p:PanelTabla.Acciones>
+                        <WrapPanel>
+                        </WrapPanel>
+                    </p:PanelTabla.Acciones>
+                    <p:Rejilla x:Name="Auditoria" Columnas="Fecha=OcurridoEn; Quién=Actor; Qué cambió=Detalle"/>
+                </p:PanelTabla>
+            </TabItem>
+
+            <!-- Cuentas de administración; docentes y estudiantes tienen su pestaña -->
+            <TabItem AutomationProperties.Name="Cuentas">
+                <TabItem.Header><p:IconoTexto Icono="IcoEscudo" Texto="Cuentas"/></TabItem.Header>
+                <p:PanelTabla x:Name="PanelCuentas" Buscar="Cédula o nombre">
+                    <p:PanelTabla.Acciones>
+                        <WrapPanel>
+                            <p:BotonAccion Texto="Agregar administrador" Icono="IcoAgregar" Atajo="Ctrl+U" Click="CrearCuenta_Click"/>
+                            <p:BotonAccion Texto="Corregir correo" Icono="IcoEditar" Secundario="True" Click="CorregirCorreo_Click"/>
+                            <p:BotonAccion Texto="Código de acceso" Icono="IcoLlave" Secundario="True" Click="EmitirCodigo_Click"/>
+                            <p:BotonAccion Texto="Activar o desactivar" Icono="IcoEncendido" Secundario="True" Click="CambiarEstado_Click"/>
+                        </WrapPanel>
+                    </p:PanelTabla.Acciones>
+                    <p:Rejilla x:Name="Personas" d:ItemsSource="{x:Static p:Muestras.Personas}" Columnas="Cédula=Cedula; Nombres=Nombres; Apellidos=Apellidos; Correo=Correo; Estado=EstadoCuenta"/>
+                </p:PanelTabla>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</p:VistaBase>

@@ -1,0 +1,9 @@
+<p:VentanaBase x:Class="Escritorio.Presentacion.VentanaCargaSeccion"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:p="clr-namespace:Escritorio.Presentacion"
+               Title="Asignar por sección" Width="820" Height="720" MinWidth="680" MinHeight="520"
+               WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <!-- El contenido es VistaCargaSeccion.xaml; se coloca al abrir con los datos de la carga académica. -->
+    <ContentControl x:Name="Contenedor" Margin="30,0,30,24" Focusable="False"/>
+</p:VentanaBase>

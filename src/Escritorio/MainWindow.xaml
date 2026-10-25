@@ -1,0 +1,256 @@
+<p:VentanaBase x:Class="Escritorio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:p="clr-namespace:Escritorio.Presentacion"
+        Title="Mérito" Width="1320" Height="840" MinWidth="800" MinHeight="500"
+        WindowStartupLocation="CenterScreen" MostrarTitulo="False" ContenidoBajoTitulo="True">
+    <p:VentanaBase.Resources>
+        <!-- Fondo del acceso -->
+
+        <SolidColorBrush x:Key="TextoAccesoSuave" Color="#B8BCE6"/>
+        <!-- Opción del menú de cuenta -->
+        <Style x:Key="OpcionMenu" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource Texto}"/>
+            <Setter Property="FontSize" Value="13.5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Fondo" Background="Transparent" CornerRadius="7" Padding="10,9">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Fondo" Property="Background" Value="{StaticResource FilaHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Fondo" Property="Background" Value="{StaticResource FilaHover}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Superficie clicable sin aspecto de botón: el logo y la tarjeta del usuario -->
+        <Style x:Key="ZonaCuenta" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="{StaticResource TextoSobreMarca}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Fondo" Background="Transparent" CornerRadius="12" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Fondo" Property="Background" Value="{StaticResource LateralHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Fondo" Property="Background" Value="{StaticResource LateralHover}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </p:VentanaBase.Resources>
+
+    <Grid>
+        <!-- Acceso -->
+        <Grid x:Name="Acceso" ClipToBounds="True">
+            <Grid.Background>
+                <RadialGradientBrush Center="0.3,0.42" GradientOrigin="0.24,0.36" RadiusX="0.9" RadiusY="1.15">
+                    <GradientStop Color="#33309E" Offset="0"/>
+                    <GradientStop Color="#1E1C6E" Offset="0.5"/>
+                    <GradientStop Color="#100F3A" Offset="1"/>
+                </RadialGradientBrush>
+            </Grid.Background>
+
+            <!-- Trazo animado del acceso; la curva se calcula en MainWindow.xaml.cs. -->
+            <Canvas x:Name="LienzoTrazo" IsHitTestVisible="False">
+                    <Path x:Name="Trazo" StrokeThickness="2.5"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeDashCap="Round">
+                        <Path.Stroke>
+                            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                                <GradientStop Color="#00F5A524" Offset="0.05"/>
+                                <GradientStop Color="#D9F5A524" Offset="0.6"/>
+                                <GradientStop Color="#FFD27A" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Path.Stroke>
+                        <Path.Effect><DropShadowEffect Color="#F5A524" BlurRadius="16" ShadowDepth="0" Opacity="0.5"/></Path.Effect>
+                    </Path>
+                    <Ellipse x:Name="Punta" Width="12" Height="12" Fill="#FFE2A3">
+                        <Ellipse.Effect><DropShadowEffect Color="#F5A524" BlurRadius="20" ShadowDepth="0" Opacity="0.95"/></Ellipse.Effect>
+                    </Ellipse>
+            </Canvas>
+            <Grid x:Name="MarcoAcceso" Margin="72,56,72,40">
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource Logo}" Width="38" Height="38"/>
+                    <TextBlock Text="{StaticResource NombreProducto}" FontFamily="{StaticResource FuenteTitulo}" FontSize="24" FontWeight="SemiBold"
+                               Foreground="White" VerticalAlignment="Center" Margin="12,0,0,2"/>
+                </StackPanel>
+
+                <StackPanel x:Name="Titular" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,56,90" MaxWidth="520" HorizontalAlignment="Left">
+                    <StackPanel.RenderTransform><TranslateTransform/></StackPanel.RenderTransform>
+                    <TextBlock FontFamily="{StaticResource FuenteTitulo}" FontSize="46" FontWeight="SemiBold" Foreground="White"
+                               LineHeight="54" LineStackingStrategy="BlockLineHeight" TextWrapping="Wrap">
+                        Las notas de<LineBreak/>tu universidad,<LineBreak/><Run Foreground="#FFD27A">claras y en orden.</Run>
+                    </TextBlock>
+                    <TextBlock Foreground="{StaticResource TextoAccesoSuave}" FontSize="16" LineHeight="27" TextWrapping="Wrap" Margin="2,22,0,0" MaxWidth="440" HorizontalAlignment="Left">
+                        Planillas de evaluación, matrícula y récord académico de cada período, con las reglas de calificación de tu institución.
+                    </TextBlock>
+                </StackPanel>
+
+
+                <!-- Tarjeta de acceso -->
+                <Border x:Name="TarjetaAcceso" Grid.Column="1" Grid.RowSpan="3" Width="420" VerticalAlignment="Center" Background="{StaticResource Superficie}" CornerRadius="20">
+                    <Border.RenderTransform><TranslateTransform/></Border.RenderTransform>
+                    <Border.Effect>
+                        <DropShadowEffect Color="#06051C" BlurRadius="70" ShadowDepth="22" Direction="270" Opacity="0.45"/>
+                    </Border.Effect>
+                    <ScrollViewer x:Name="DesplazarAcceso" VerticalScrollBarVisibility="Auto" Focusable="False" MaxHeight="720">
+                        <StackPanel x:Name="ContenidoTarjeta" Margin="40,38,40,34">
+                            <TextBlock Text="Iniciar sesión" Style="{StaticResource TituloPagina}" FontSize="28"/>
+                            <TextBlock Text="Con tu cédula y la contraseña de tu cuenta." Style="{StaticResource TextoSecundario}" Margin="0,7,0,28"/>
+
+                            <Label Content="_Cédula" Target="{Binding ElementName=Cedula}"/>
+                            <TextBox x:Name="Cedula" Style="{StaticResource CampoIcono}" Tag="{StaticResource IcoUsuario}" MaxLength="16"
+                                     p:Sugerencias.Texto="V-12345678" AutomationProperties.Name="Cédula" Margin="0,0,0,18"/>
+
+                            <Label Content="C_ontraseña" Target="{Binding ElementName=Clave}"/>
+                            <PasswordBox x:Name="Clave" Style="{StaticResource ClaveIcono}" Tag="{StaticResource IcoCandado}" MaxLength="128"
+                                         AutomationProperties.Name="Contraseña"/>
+                            <TextBlock x:Name="AvisoMayusculas" Text="Bloq Mayús está activado." Foreground="{StaticResource Aviso}" FontSize="12.5"
+                                       Margin="2,7,0,0" Visibility="Collapsed"/>
+                            <CheckBox x:Name="RecordarCedula" Content="Recordar mi cédula en este equipo" Margin="0,14,0,0"
+                                      ToolTip="Nunca se guarda la contraseña."/>
+
+
+                            <Border x:Name="Alerta" CornerRadius="10" Padding="12,10" Margin="0,18,0,0" BorderThickness="1" Visibility="Collapsed">
+                                <DockPanel>
+                                    <p:Icono x:Name="IconoAlerta" Width="18" Height="18" VerticalAlignment="Top" Margin="0,1,10,0"/>
+                                    <TextBlock x:Name="MensajeAcceso" TextWrapping="Wrap" LineHeight="20"/>
+                                </DockPanel>
+                            </Border>
+
+                            <Border x:Name="AvisoConfiguracion" CornerRadius="12" Padding="14,12" Margin="0,18,0,0" Visibility="Collapsed"
+                                    Background="{StaticResource Indigo50}" BorderBrush="{StaticResource Indigo100}" BorderThickness="1">
+                                <StackPanel>
+                                    <TextBlock Text="Este servidor todavía no tiene una cuenta de administración." FontWeight="SemiBold" TextWrapping="Wrap"
+                                               Foreground="{StaticResource Indigo800}"/>
+                                    <TextBlock Text="Créala con el código de configuración que mostró la instalación del servidor." Style="{StaticResource TextoSecundario}"
+                                               Margin="0,4,0,10" TextWrapping="Wrap"/>
+                                    <Button Content="Configurar Mérito" Click="ConfigurarMerito" HorizontalAlignment="Left" MinHeight="36"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Button x:Name="Entrar" Content="Iniciar sesión" Click="IniciarSesion" IsDefault="True" MinHeight="46" Margin="0,24,0,0" FontSize="14"/>
+                            <!-- Con correo configurado, la persona crea o recupera su acceso sola; sin él, con el código de la universidad -->
+                            <Button x:Name="PorCorreo" Content="¿Primera vez u olvidaste tu contraseña?" Style="{StaticResource BotonSutil}" Click="Registrarse"
+                                    MinHeight="40" Margin="0,8,0,0" Visibility="Collapsed"
+                                    ToolTip="Te enviamos un código al correo que registró la universidad"/>
+                            <Button x:Name="ConCodigo" Content="Activar cuenta o recuperar acceso" Style="{StaticResource BotonSutil}" Click="Activar" MinHeight="40" Margin="0,8,0,0"
+                                    ToolTip="Con el código temporal que entrega administración o tu docente"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </Grid>
+        <!-- Aplicación -->
+        <Grid x:Name="Aplicacion" Visibility="Collapsed">
+            <Grid.ColumnDefinitions><ColumnDefinition x:Name="ColumnaLateral" Width="256"/><ColumnDefinition/></Grid.ColumnDefinitions>
+            <Border Background="{StaticResource FondoLateral}">
+                <DockPanel x:Name="Lateral" Margin="16,20,16,16">
+                    <!-- El logo abre el menú de la cuenta -->
+                    <Button x:Name="BotonLogo" DockPanel.Dock="Top" Style="{StaticResource ZonaCuenta}" Padding="8,6" Margin="0,0,0,28" Click="AbrirMenuCuenta"
+                            ToolTip="Tu cuenta" AutomationProperties.Name="Menú de la cuenta">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{StaticResource Logo}" Width="36" Height="36"/>
+                            <StackPanel x:Name="TextoMarca" Margin="12,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="{StaticResource NombreProducto}" Foreground="{StaticResource TextoSobreMarca}" FontFamily="{StaticResource FuenteTitulo}" FontSize="19" FontWeight="SemiBold"/>
+                                <TextBlock Text="{StaticResource Descriptor}" Foreground="{StaticResource LateralTenue}" FontSize="12"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="TarjetaCuenta" DockPanel.Dock="Bottom" Style="{StaticResource ZonaCuenta}" Padding="0" Click="AbrirMenuCuenta"
+                            AutomationProperties.Name="Tu cuenta: cambiar contraseña o cerrar sesión">
+                        <Border Background="#0FFFFFFF" CornerRadius="12" Padding="10" BorderBrush="#14FFFFFF" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/><ColumnDefinition/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Width="36" Height="36" CornerRadius="18" Background="{StaticResource Indigo500}">
+                                    <TextBlock x:Name="Iniciales" Foreground="{StaticResource TextoSobreMarca}" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel x:Name="DatosCuenta" Grid.Column="1" Margin="10,0,6,0" VerticalAlignment="Center">
+                                    <TextBlock x:Name="NombrePersona" Foreground="{StaticResource TextoSobreMarca}" FontWeight="SemiBold" FontSize="13" TextWrapping="WrapWithOverflow" TextTrimming="CharacterEllipsis" LineHeight="16" LineStackingStrategy="BlockLineHeight" MaxHeight="32"/>
+                                    <TextBlock x:Name="RolPersona" Foreground="{StaticResource LateralTenue}" FontSize="12" Margin="0,1,0,0"/>
+                                </StackPanel>
+                                <p:Icono x:Name="FlechaCuenta" Grid.Column="2" Datos="{StaticResource IcoChevronAbajo}" Width="14" Height="14" Margin="0,0,4,0" RenderTransformOrigin="0.5,0.5"
+                                         TextElement.Foreground="{StaticResource LateralTenue}">
+                                    <p:Icono.RenderTransform><RotateTransform Angle="180"/></p:Icono.RenderTransform>
+                                </p:Icono>
+                            </Grid>
+                        </Border>
+                    </Button>
+
+                    <StackPanel x:Name="Navegacion"/>
+                </DockPanel>
+            </Border>
+
+            <Popup x:Name="MenuCuenta" StaysOpen="False" AllowsTransparency="True" PopupAnimation="Fade" Placement="Top" PlacementTarget="{Binding ElementName=TarjetaCuenta}">
+                <Border Background="{StaticResource Superficie}" CornerRadius="10" BorderBrush="{StaticResource Borde}" BorderThickness="1" Padding="6" Width="236" Margin="10">
+                    <Border.Effect><DropShadowEffect Color="#1B1E3A" BlurRadius="24" ShadowDepth="6" Direction="270" Opacity="0.18"/></Border.Effect>
+                    <StackPanel>
+                        <StackPanel Margin="10,8,10,10">
+                            <TextBlock x:Name="MenuNombre" FontWeight="SemiBold" Foreground="{StaticResource Texto}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock x:Name="MenuDetalle" Foreground="{StaticResource Texto3}" FontSize="12.5" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Rectangle Height="1" Fill="{StaticResource Borde}" Margin="4,0,4,4"/>
+                        <Button x:Name="OpcionClave" Style="{StaticResource OpcionMenu}" Click="CambiarClave" AutomationProperties.Name="Cambiar contraseña">
+                            <StackPanel Orientation="Horizontal">
+                                <p:Icono Datos="{StaticResource IcoLlave}" Width="16" Height="16" TextElement.Foreground="{StaticResource Texto2}"/>
+                                <TextBlock Text="Cambiar contraseña" Margin="11,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource OpcionMenu}" Click="VerAtajos" AutomationProperties.Name="Atajos de teclado">
+                            <DockPanel>
+                                <TextBlock DockPanel.Dock="Right" Text="F1" FontFamily="{StaticResource FuenteCodigo}" FontSize="12" Foreground="{StaticResource Texto3}"/>
+                                <p:Icono Datos="{StaticResource IcoTeclado}" Width="16" Height="16" TextElement.Foreground="{StaticResource Texto2}"/>
+                                <TextBlock Text="Atajos de teclado" Margin="11,0,0,0"/>
+                            </DockPanel>
+                        </Button>
+                        <Rectangle Height="1" Fill="{StaticResource Borde}" Margin="4,4,4,4"/>
+                        <Button x:Name="OpcionSalir" Style="{StaticResource OpcionMenu}" Click="CerrarSesion" AutomationProperties.Name="Cerrar sesión">
+                            <StackPanel Orientation="Horizontal">
+                                <p:Icono Datos="{StaticResource IcoSalir}" Width="16" Height="16" TextElement.Foreground="{StaticResource Error}"/>
+                                <TextBlock Text="Cerrar sesión" Margin="11,0,0,0" Foreground="{StaticResource Error}"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Popup>
+
+            <Grid Grid.Column="1" Background="{StaticResource Fondo}">
+                <Grid.RowDefinitions><RowDefinition Height="40"/><RowDefinition Height="Auto"/><RowDefinition/></Grid.RowDefinitions>
+                <Grid x:Name="Cabecera" Grid.Row="1" Margin="36,0,36,22">
+                    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="TituloPagina" Style="{StaticResource TituloPagina}"/>
+                        <TextBlock x:Name="DescripcionPagina" Style="{StaticResource TextoSecundario}" Margin="0,5,0,0"/>
+                    </StackPanel>
+
+                </Grid>
+                <ContentControl x:Name="Contenido" Grid.Row="2" Margin="36,0,36,26" Focusable="False">
+                    <ContentControl.RenderTransform><TranslateTransform x:Name="Entrada"/></ContentControl.RenderTransform>
+                </ContentControl>
+            </Grid>
+        </Grid>
+    </Grid>
+</p:VentanaBase>

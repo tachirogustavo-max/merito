@@ -1,0 +1,21 @@
+﻿<p:VistaBase x:Class="Escritorio.Presentacion.VistaOfertas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:Escritorio.Presentacion"
+             mc:Ignorable="d" d:Language="es-VE" d:DesignWidth="1000" d:DesignHeight="600">
+    <DockPanel>
+        <p:FranjaAviso DockPanel.Dock="Bottom"/>
+        <p:PanelTabla x:Name="PanelOfertas" Buscar="Materia, sección o docente">
+            <p:PanelTabla.Acciones>
+                <WrapPanel>
+                    <p:BotonAccion Texto="Abrir planilla" Icono="IcoAbrir" Atajo="Enter o Ctrl+A" Click="Abrir_Click"/>
+                </WrapPanel>
+            </p:PanelTabla.Acciones>
+            <!-- Administración ve también al docente; el docente solo ve lo suyo y la columna se quita al abrir. -->
+            <p:Rejilla x:Name="Ofertas" d:ItemsSource="{x:Static p:Muestras.Ofertas}"
+                       Columnas="Período=Periodo; Materia=Materia; Sección=Seccion; Docente=Docente; Inscritos=Matriculados; Por revisar=Pendientes; Estado=Estado"/>
+        </p:PanelTabla>
+    </DockPanel>
+</p:VistaBase>
